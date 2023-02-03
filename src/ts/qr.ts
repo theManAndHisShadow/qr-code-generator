@@ -1,3 +1,7 @@
+import {encodeStringToBinaryBytes} from './encoder'
+
 export function qr(targetToConvert: string){
-    return targetToConvert;
+    return encodeStringToBinaryBytes(targetToConvert);
 }
+
+console.log(qr('hello'));

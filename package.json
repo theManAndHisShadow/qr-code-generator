@@ -12,7 +12,7 @@
   "dependencies": {},
   "scripts": {
     "dev": "webpack --mode development",
-    "test": "jest --config ./jest.config.js ./tests/unit/*",
+    "test": "jest --config ./jest.config.js ./tests/*",
     "build": "webpack --mode production"
   }
 }

@@ -82,7 +82,7 @@ export function sanitizeInput(inputText: string){
 
 /**
  * Groups letters at string to pairs.
- * @param string target string
+ * @param string target
  * @returns 
  */
 export function groupLettersByTwo(string: string){
@@ -125,7 +125,7 @@ function pairsToBinary(pairs: number[][]){
 
 /**
  * Converts decimal into to bynary.
- * @param number target number
+ * @param number target
  * @param bit NB! bit size of result value
  * @returns 
  */
@@ -137,7 +137,7 @@ export function decimalToBinary(number: number, bit: number){
 
 /**
  * Encode given string to binary line value.
- * @param string target string.
+ * @param string target
  * @returns binary value (string)
  */
 export function encodeStringToBinaryBytes(string: string){

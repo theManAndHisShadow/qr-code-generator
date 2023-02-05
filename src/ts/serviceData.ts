@@ -1,24 +1,29 @@
+import { decimalToBinary } from "./helpers";
+
 /**
  * Get code version that can contains bit flow.
  * @param bitsArray correction array
- * @param bitsAmount bit flow length
- * @returns code version
+ * @param bitStreamSize bit stream length
+ * @returns object {number: version number, capacity: version capacity}
  */
-export function choseVersion(bitsArray:number[], bitsAmount: number){
-    let filtred = bitsArray.filter(bits => bitsAmount <= bits);
+export function choseVersion(bitsArray:number[], bitStreamSize: number){
+    let filtred = bitsArray.filter(bits => bitStreamSize <= bits);
     let optimal = bitsArray.indexOf(filtred[0]);
-    return optimal + 1;
-}
 
+    return {
+        number: optimal + 1,
+        capacity: filtred[0],
+    };
+}
 
 
 /**
  * Returns optimal code version using correction level and bit flow length
- * @param correction 
- * @param bitsAmount 
+ * @param correction level L M Q H
+ * @param bitStreamSize bit stream length
  * @returns code version
  */
-export function getOptimalQRCodeVersion(correction:string, bitsAmount:number){
+export function getOptimalQRCodeVersion(bitStreamSize:number, correction:string){
     interface DataCollection {
         [key: string]: Array<number>
     }
@@ -68,7 +73,38 @@ export function getOptimalQRCodeVersion(correction:string, bitsAmount:number){
     };
 
     let correctionLevelArray = data[correction];
-    let qrVersion = choseVersion(correctionLevelArray, bitsAmount);
+    let qrVersion = choseVersion(correctionLevelArray, bitStreamSize);
 
     return qrVersion;
+}
+
+/**
+ * Returns object with all service data: version, capacity, service prefix bits; 
+ * contains encoded data, but not original data (originalData = '').
+ * @param bitStream encoded bits stream
+ * @param correction level
+ * @returns 
+ */
+export function getServiceData(bitStream: string, correction?: string){
+    correction = correction || 'M';
+    let version = getOptimalQRCodeVersion(bitStream.length, correction);
+    let serviceDataBitsSize: number = 1;
+
+    if(version.number >= 1 || version.number <= 9){
+        serviceDataBitsSize = 9;
+    } else if(version.number >= 10 && version.number <= 26) {
+        serviceDataBitsSize = 11;
+    } else if(version.number >= 27 && version.number <= 40) {
+        serviceDataBitsSize = 13;
+    }
+
+    let serviceData = `0010${decimalToBinary(bitStream.length, serviceDataBitsSize)}`;
+
+    return {
+        correction: correction,
+        version: version,
+        serviceData: serviceData,
+        originalData: '',
+        encodedData: bitStream,
+    };
 }

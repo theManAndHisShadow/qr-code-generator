@@ -1,11 +1,11 @@
 import {
   convertAllItemsToCodes, 
   groupLettersByTwo, 
-  sanitizeInput, 
-  decimalToBinary, 
+  sanitizeInput,  
   encodeStringToBinaryBytes
 } from '../src/ts/encoder';
 
+import {decimalToBinary} from '../src/ts/helpers'
 
 
 let targetString1 = "Hello World!";

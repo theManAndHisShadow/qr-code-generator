@@ -17,6 +17,7 @@ export function choseVersion(bitsArray:number[], bitStreamSize: number){
 }
 
 
+
 /**
  * Returns optimal code version using correction level and bit flow length
  * @param correction level L M Q H
@@ -78,6 +79,8 @@ export function getOptimalQRCodeVersion(bitStreamSize:number, correction:string)
     return qrVersion;
 }
 
+
+
 /**
  * Returns object with all service data: version, capacity, service prefix bits; 
  * contains encoded data, but not original data (originalData = '').
@@ -85,8 +88,7 @@ export function getOptimalQRCodeVersion(bitStreamSize:number, correction:string)
  * @param correction level
  * @returns 
  */
-export function getServiceData(bitStream: string, correction?: string){
-    correction = correction || 'M';
+export function getServiceData(bitStream: string, correction: string){
     let version = getOptimalQRCodeVersion(bitStream.length, correction);
     let serviceDataBitsSize: number = 1;
 
@@ -101,10 +103,7 @@ export function getServiceData(bitStream: string, correction?: string){
     let serviceData = `0010${decimalToBinary(bitStream.length, serviceDataBitsSize)}`;
 
     return {
-        correction: correction,
         version: version,
         serviceData: serviceData,
-        originalData: '',
-        encodedData: bitStream,
     };
 }

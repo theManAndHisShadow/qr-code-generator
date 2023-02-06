@@ -69,7 +69,7 @@ function getLetterCode(letter: string){
  * @returns sanitized string
  */
 export function sanitizeInput(inputText: string){
-    let sanitized = inputText.replace(/([^a-zA-Z0-9$%*+-./:\s])+/g, '');
+    let sanitized = inputText.replace(/([^a-zA-Z0-9$%*+-./:\s]|\,)+/g, '');
     let atUpperCase: Array<string>;
 
     atUpperCase = sanitized.split('');

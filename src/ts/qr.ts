@@ -8,7 +8,7 @@ import {getServiceData} from './serviceData'
  * @param correction encoding correction level
  * @returns 
  */
-function prepareData(targetToConvert: string, correction: string){
+export function prepareData(targetToConvert: string, correction: string){
     let encodedString = encodeStringToBinaryBytes(targetToConvert);
     let serviceData = getServiceData(encodedString, correction);
     let totalLength = serviceData.serviceData.length + encodedString.length;

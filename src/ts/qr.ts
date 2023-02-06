@@ -11,10 +11,35 @@ import {getServiceData} from './serviceData'
 function prepareData(targetToConvert: string, correction: string){
     let encodedString = encodeStringToBinaryBytes(targetToConvert);
     let serviceData = getServiceData(encodedString, correction);
+    let totalLength = serviceData.serviceData.length + encodedString.length;
+
+    // check multiplicity 8
+    if(totalLength % 8 > 0) {
+        let shortage = (Math.ceil(totalLength / 8) * 8) - totalLength;
+        
+        // add extra zero data
+        encodedString += '0'.repeat(shortage);
+        totalLength = serviceData.serviceData.length + encodedString.length;
+    }
+
+    // fill bit stream to full capacity
+    for(
+        let i = 0, j = 0; 
+        i < serviceData.version.capacity - totalLength;
+        i += 8, j++
+    ){
+        if(j % 2 > 0) {
+            encodedString += '00010001';
+        } else {
+            encodedString += '11101100';
+        }
+    }
+    
 
     return {
         correction: correction,
         version: serviceData.version,
+        stream: serviceData.serviceData + encodedString,
         originalData:targetToConvert,
         serviceData: serviceData.serviceData,
         encodedData: encodedString

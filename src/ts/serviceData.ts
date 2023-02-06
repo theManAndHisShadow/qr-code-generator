@@ -11,7 +11,10 @@ export function choseVersion(bitsArray:number[], bitStreamSize: number){
     let optimal = bitsArray.indexOf(filtred[0]);
 
     return {
+        // version number stored at array index, therefore version = index + 1
         number: optimal + 1,
+
+        // optimal capacity value is nearest version capacity at filtered array
         capacity: filtred[0],
     };
 }
@@ -100,6 +103,7 @@ export function getServiceData(bitStream: string, correction: string){
         serviceDataBitsSize = 13;
     }
 
+    // 0010 - bits prefix for number and letters method encoding
     let serviceData = `0010${decimalToBinary(bitStream.length, serviceDataBitsSize)}`;
 
     return {

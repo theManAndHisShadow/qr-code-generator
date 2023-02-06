@@ -73,6 +73,8 @@ export function sanitizeInput(inputText: string){
     let atUpperCase: Array<string>;
 
     atUpperCase = sanitized.split('');
+
+    // unify all input data letter case
     atUpperCase = atUpperCase.map(letter => {
         return letter.toLocaleUpperCase();
     });

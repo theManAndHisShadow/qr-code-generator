@@ -59,8 +59,9 @@ export function divideIntoBlocks(preparedData: any){
     let amountOBlocks = getBlocksAmount(preparedData.correction, preparedData.version.number);
     let blockByteSize = streamSize / amountOBlocks;
 
-    let blocks: Array<string> = [];
-    let block: string;
+    let blocks: string[][] = [];
+    let block: string[] = [];
+    let positionStart, positionEnd;
 
     for(let i = 0; i < amountOBlocks; i++) {
         // if not divided evenly
@@ -74,17 +75,16 @@ export function divideIntoBlocks(preparedData: any){
             ? Math.ceil(blockByteSize)
             : Math.floor(blockByteSize);
 
-            let positionStart = i >= overage ? byteSize * i - overage : byteSize * i;
-            let positionEnd = positionStart + byteSize;
-
-            block = preparedData.stream.slice(positionStart * 8, positionEnd * 8);
+            positionStart = i >= overage ? byteSize * i - overage : byteSize * i;
+            positionEnd = positionStart + byteSize;
         } else {
             // if divided evenly - OK
-            let positionStart = blockByteSize * i;
-            let positionEnd = positionStart + blockByteSize;
- 
-            block = preparedData.stream.slice(positionStart * 8, positionEnd * 8);
+            positionStart = blockByteSize * i;
+            positionEnd = positionStart + blockByteSize;
         }
+
+        let part = preparedData.stream.slice(positionStart * 8, positionEnd * 8);
+        block = part.match(/.{1,8}/g);
 
         blocks.push(block);
      }

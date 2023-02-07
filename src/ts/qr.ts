@@ -1,5 +1,6 @@
 import {encodeStringToBinaryBytes} from './encoder'
 import {getServiceData} from './serviceData'
+import {divideIntoBlocks} from './structurer';
 
 
 /**
@@ -52,6 +53,7 @@ export function qr(targetToConvert: string, correction?: string){
     correction = correction || 'M';
 
     let data = prepareData(targetToConvert, correction);
+    let blocked = divideIntoBlocks(data);
 
     return data;
 }

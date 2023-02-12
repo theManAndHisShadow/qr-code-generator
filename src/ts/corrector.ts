@@ -1,4 +1,4 @@
-import { decimalToBinary } from "./helpers";
+import { decimalToBinary, verticalFlatten } from "./helpers";
 
 interface DataCollection {
     [key: string]: Array<number>
@@ -74,6 +74,7 @@ export function getPolynomials(correctionBytesAmount: number){
 
     return data[correctionBytesAmount];
 }
+
 
 
 /**
@@ -191,6 +192,27 @@ export function calculateCorrectionBytes(dataObject: any){
     return allCorrectionBytes;
 }
 
+
+
+/**
+ * Modifies and returns data object with stream, that has new order and contains correction bytes.
+ * @param dataObject 
+ * @returns modified data object with new array of stream
+ */
 export function addCorrectionBytes(dataObject: any){
-    
+    // calculate correction bytes
+    let correctionBytes = calculateCorrectionBytes(dataObject);
+
+    // copy blocks
+    let blocks = [...dataObject.blocks];
+
+    // make blocks and correction bytes flatted
+    let flattedBytes = verticalFlatten(blocks);
+    let flattedCorrectionBytes = verticalFlatten(correctionBytes);
+
+
+    let newStream = flattedBytes.concat(flattedCorrectionBytes);
+    dataObject.stream = newStream;
+
+    return dataObject;
 }

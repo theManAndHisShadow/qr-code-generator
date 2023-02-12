@@ -63,7 +63,7 @@ let correctionBytes1 = calculateCorrectionBytes({
 
 describe('calculateCorrectionBytes() returns correction bytes array', () => {
     test('calculateCorrectionBytes(...some object) returns expected value', ()=>{
-        expect(correctionBytes1[0]).toEqual(expect.arrayContaining([
+        expect(correctionBytes1[0]).toEqual([
             "00010000",
             "01010101",
             "00001100",
@@ -92,6 +92,26 @@ describe('calculateCorrectionBytes() returns correction bytes array', () => {
             "10111101",
             "11000001",
             "00011000"
-        ]));
+        ]);
+    });
+});
+
+
+
+let grouped1 = divideIntoBlocks(preparedData1);
+let readyDataObject = addCorrectionBytes(grouped1);
+
+// readyDataObject`s bytes
+// ||
+// \/
+let flattedBytes = ['00100001', '11101011','00001011', '01111000','11010001', '01110010','11011100', '01001101','01000011', '01000000'];
+let flattedCorrectionBytes = [
+    '11101001', '10001100','00110010', '10101010','11000101', '10111111','01001000', '11101101',
+    '10001011', '00010100','10111011', '00110101','10101111', '10111111','00101100', '10100011','00100100'
+];
+
+describe('addCorrectionBytes() returns new steam with correction bytes', () => {
+    test('addCorrectionBytes(...some object) returns expected value', ()=>{
+        expect(readyDataObject.stream).toEqual(flattedBytes.concat(flattedCorrectionBytes));
     });
 });

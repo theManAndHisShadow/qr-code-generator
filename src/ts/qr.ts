@@ -53,7 +53,7 @@ export function qr(targetToConvert: string, correction?: string){
     correction = correction || 'M';
 
     let data = prepareData(targetToConvert, correction);
-    let blocked = divideIntoBlocks(data);
+    let grouped = divideIntoBlocks(data);
 
     return data;
 }

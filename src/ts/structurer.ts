@@ -72,8 +72,8 @@ export function divideIntoBlocks(preparedData: any){
             // for example: 180 bytes, 8 groups, streamSize % amountOBlocks -> 22 bytes and overage 4 byte, 
             // then blocks = 22, 22, 22, 22, 23, 23, 23, 23 = 180 at sum
             let byteSize = i >= overage 
-            ? Math.ceil(blockByteSize)
-            : Math.floor(blockByteSize);
+                ? Math.ceil(blockByteSize)
+                : Math.floor(blockByteSize);
 
             positionStart = i >= overage ? byteSize * i - overage : byteSize * i;
             positionEnd = positionStart + byteSize;

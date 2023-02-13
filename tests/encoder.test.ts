@@ -5,7 +5,7 @@ import {
   encodeStringToBinaryBytes
 } from '../src/ts/encoder';
 
-import {decimalToBinary} from '../src/ts/helpers'
+import {decimalToBinary} from '../src/ts/helper'
 
 
 let targetString1 = "Hello World!";

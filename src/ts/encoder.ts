@@ -1,4 +1,4 @@
-import {decimalToBinary} from './helpers'
+import {decimalToBinary} from './helper'
 
 /**
  * Returns code of single letter.

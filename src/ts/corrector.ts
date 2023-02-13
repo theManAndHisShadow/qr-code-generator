@@ -1,4 +1,4 @@
-import { decimalToBinary, verticalFlatten } from "./helpers";
+import { decimalToBinary, verticalFlatten } from "./helper";
 
 interface DataCollection {
     [key: string]: Array<number>

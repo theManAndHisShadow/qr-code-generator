@@ -1,4 +1,4 @@
-import { decimalToBinary } from "./helpers";
+import { decimalToBinary } from "./helper";
 
 /**
  * Get code version that can contains bit flow.

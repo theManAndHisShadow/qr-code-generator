@@ -1,12 +1,14 @@
 // webpack.config.js
-const path = require('path')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
         main: './src/ts/qr.ts',
     },
 
-    mode: 'production',
+    mode: 'devlopment',
 
     module: {
         // Use `ts-loader` on any file that ends in '.ts'
@@ -24,7 +26,18 @@ module.exports = {
       },
 
     output: {
-        path: path.resolve(__dirname, './dist/js'),
-        filename: 'qr.js',
+        path: path.resolve(__dirname, './dist'),
+        filename: 'js/qr.js',
     },
+
+    plugins:[
+      new HtmlWebpackPlugin({
+        template: './src/index.html'
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: "./src/css/", to: "./css/" },
+        ],
+      }),
+    ],
 }

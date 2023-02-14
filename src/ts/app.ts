@@ -6,16 +6,20 @@ const triggerButton = document.querySelector('#app button');
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 
 triggerButton?.addEventListener('click', () => {
-    if(input && input.value.length > 0) {
-        let qrCode = qr({
-            text: input.value,
-            correction: correctionLevelSelector.value,
-        });
-
-        appResult.children.length > 0 
-            ? appResult.replaceChild(qrCode.canvas, appResult.children[0])
-            : appResult.appendChild(qrCode.canvas);
-
-        console.log(qrCode.data);
+    if(input) {
+        if( !/[а-яёА-ЯЁ]+/gm.test(input.value) && input.value.length > 0) {
+            let qrCode = qr({
+                text: input.value,
+                correction: correctionLevelSelector.value,
+            });
+    
+            appResult.children.length > 0 
+                ? appResult.replaceChild(qrCode.canvas, appResult.children[0])
+                : appResult.appendChild(qrCode.canvas);
+    
+            console.log(qrCode.data);
+        } else {
+            // do something
+        }
     }
 });

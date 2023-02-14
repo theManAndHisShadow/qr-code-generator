@@ -63,6 +63,8 @@ export function qr(params: {text: string, correction?: string, size?: number}){
     canvas.width = params.size;
     canvas.height = params.size;
 
+    drawQR(canvas, readyData);
+
     return {
         canvas: canvas, 
         data: readyData

@@ -1,16 +1,17 @@
-import {encodeStringToBinaryBytes} from './encoder'
-import {getServiceData} from './serviceData'
+import {encodeStringToBinaryBytes} from './encoder';
+import {getServiceData} from './serviceData';
 import {divideIntoBlocks} from './structurer';
+import {drawQR} from './renderer';
 
 
 /**
  * Prepares input data to working format.
- * @param targetToConvert target data (string, number to encode)
+ * @param text target data (string, number to encode)
  * @param correction encoding correction level
  * @returns 
  */
-export function prepareData(targetToConvert: string, correction: string){
-    let encodedString = encodeStringToBinaryBytes(targetToConvert);
+export function prepareData(text: string, correction: string){
+    let encodedString = encodeStringToBinaryBytes(text);
     let serviceData = getServiceData(encodedString, correction);
     let totalLength = serviceData.serviceData.length + encodedString.length;
 
@@ -41,7 +42,7 @@ export function prepareData(targetToConvert: string, correction: string){
         correction: correction,
         version: serviceData.version,
         stream: serviceData.serviceData + encodedString,
-        originalData:targetToConvert,
+        originalData:text,
         serviceData: serviceData.serviceData,
         encodedData: encodedString
     };
@@ -49,10 +50,10 @@ export function prepareData(targetToConvert: string, correction: string){
 
 
 
-export function qr(targetToConvert: string, correction?: string){
-    correction = correction || 'M';
+export function qr(params: {text: string, correction?: string}){
+    params.correction = params.correction || 'M';
 
-    let data = prepareData(targetToConvert, correction);
+    let data = prepareData(params.text, params.correction);
     let grouped = divideIntoBlocks(data);
 
     return data;

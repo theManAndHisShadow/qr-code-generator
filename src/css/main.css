@@ -13,4 +13,8 @@
     left: 50%;
     transform: translate(-50%, -50.4%);
     font-family: 'Roboto', sans-serif;
+    background: #e3e3e3;
+    margin: 5px 0px;
+    padding: 10px 15px;
+    border-radius: 5px;
 }

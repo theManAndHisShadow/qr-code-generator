@@ -17,10 +17,16 @@
             <div>
                 <label>
                     <input placeholder="url or text">
+                    <select>
+                        <option value="L" selected>L</option>
+                        <option value="M">M</option>
+                        <option value="Q">Q</option>
+                        <option value="H">H</option>
+                    </select>
                     <button>Convert to QR</button>
                 </label>
             </div>
-            <div data-qr-code-container></div>
+            <div id="output"></div>
             <script src="js/lib/qr.js"></script>
             <script src="js/app.js"></script>
         </div>

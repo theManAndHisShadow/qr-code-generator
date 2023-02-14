@@ -1,6 +1,6 @@
-import { prepareData } from "../src/ts/qr";
-import { divideIntoBlocks } from "../src/ts/structurer";
-import { getCorrectionBytesAmount, addCorrectionBytes, calculateCorrectionBytes } from "../src/ts/corrector";
+import { prepareData } from "../src/ts/lib/qr";
+import { divideIntoBlocks } from "../src/ts/lib/structurer";
+import { getCorrectionBytesAmount, addCorrectionBytes, calculateCorrectionBytes } from "../src/ts/lib/corrector";
 
 let text1 = 'Hello World!';
 let text2 = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 

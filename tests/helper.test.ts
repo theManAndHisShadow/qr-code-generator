@@ -1,4 +1,4 @@
-import { verticalFlatten } from "../src/ts/helper";
+import { verticalFlatten } from "../src/ts/lib/helper";
 
 let complexArray1 = [
     ['1', '6'           ],

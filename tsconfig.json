@@ -1,6 +1,7 @@
 {
     "files": [
-        "src/ts/qr.ts"
+        "src/ts/lib/qr.ts",
+        "src/ts/app.ts",
     ],
     "compilerOptions": {
         "noImplicitAny": true,

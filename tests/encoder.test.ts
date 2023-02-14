@@ -3,9 +3,9 @@ import {
   groupLettersByTwo, 
   sanitizeInput,  
   encodeStringToBinaryBytes
-} from '../src/ts/encoder';
+} from '../src/ts/lib/encoder';
 
-import {decimalToBinary} from '../src/ts/helper'
+import {decimalToBinary} from '../src/ts/lib/helper'
 
 
 let targetString1 = "Hello World!";

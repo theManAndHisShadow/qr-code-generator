@@ -1,5 +1,5 @@
-import {prepareData} from '../src/ts/qr';
-import {divideIntoBlocks, getBlocksAmount} from '../src/ts/structurer';
+import {prepareData} from '../src/ts/lib/qr';
+import {divideIntoBlocks, getBlocksAmount} from '../src/ts/lib/structurer';
 
 
 let text1 = 'Hello';

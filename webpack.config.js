@@ -5,7 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: './src/ts/qr.ts',
+      'lib/qr': './src/ts/lib/qr.ts',
+      'app': './src/ts/app.ts',
     },
 
     mode: 'devlopment',
@@ -27,7 +28,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, './dist'),
-        filename: 'js/qr.js',
+        filename: 'js/[name].js',
     },
 
     plugins:[

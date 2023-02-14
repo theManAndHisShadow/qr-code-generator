@@ -1,4 +1,4 @@
-import {getOptimalQRCodeVersion, choseVersion} from "../src/ts/serviceData";
+import {getOptimalQRCodeVersion, choseVersion} from "../src/ts/lib/serviceData";
 
 let testValue1 = 15;
 let testBitsArray = [10, 17, 19];

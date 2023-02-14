@@ -1,6 +1,7 @@
 import {encodeStringToBinaryBytes} from './encoder';
 import {getServiceData} from './serviceData';
 import {divideIntoBlocks} from './structurer';
+import {addCorrectionBytes} from './corrector';
 import {drawQR} from './renderer';
 
 
@@ -50,11 +51,20 @@ export function prepareData(text: string, correction: string){
 
 
 
-export function qr(params: {text: string, correction?: string}){
+export function qr(params: {text: string, correction?: string, size?: number}){
     params.correction = params.correction || 'M';
+    params.size = params.size || 400;
 
     let data = prepareData(params.text, params.correction);
-    let grouped = divideIntoBlocks(data);
+    let groupedData = divideIntoBlocks(data);
+    let readyData = addCorrectionBytes(groupedData);
 
-    return data;
+    let canvas = document.createElement('canvas');
+    canvas.width = params.size;
+    canvas.height = params.size;
+
+    return {
+        canvas: canvas, 
+        data: readyData
+    };
 }

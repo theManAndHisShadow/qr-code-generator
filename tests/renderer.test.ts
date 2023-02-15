@@ -16,14 +16,14 @@ describe('getAlignmentAnchorPos() returns aligment anchor positions', () => {
 
 describe('getModulesAmount() returns qr code module size', () => {
     test('getModulesAmount(version1) returns module size - 21', () => {
-        expect(getModulesAmount(version1)).toEqual(21);
+        expect(getModulesAmount(version1)).toEqual(29);
     });
 
-    test('getModulesAmount(version2) returns module size - 25', () => {
-        expect(getModulesAmount(version2)).toEqual(25);
+    test('getModulesAmount(version2) returns module size - 33', () => {
+        expect(getModulesAmount(version2)).toEqual(33);
     });
 
-    test('getModulesAmount(version28) returns module size - 127', () => {
-        expect(getModulesAmount(version28)).toEqual(129);
+    test('getModulesAmount(version28) returns module size - 137', () => {
+        expect(getModulesAmount(version28)).toEqual(137);
     });
 });

@@ -1,4 +1,4 @@
-import {getAlignmentAnchorPos, getModuleSize} from '../src/ts/lib/renderer';
+import {getAlignmentAnchorPos, getModulesAmount} from '../src/ts/lib/renderer';
 
 let version1 = 1;
 let version2 = 2;
@@ -14,16 +14,16 @@ describe('getAlignmentAnchorPos() returns aligment anchor positions', () => {
     });
 });
 
-describe('getModuleSize() returns qr code module size', () => {
-    test('getModuleSize(version1) returns module size - 21', () => {
-        expect(getModuleSize(version1)).toEqual(21);
+describe('getModulesAmount() returns qr code module size', () => {
+    test('getModulesAmount(version1) returns module size - 21', () => {
+        expect(getModulesAmount(version1)).toEqual(21);
     });
 
-    test('getModuleSize(version2) returns module size - 25', () => {
-        expect(getModuleSize(version2)).toEqual(25);
+    test('getModulesAmount(version2) returns module size - 25', () => {
+        expect(getModulesAmount(version2)).toEqual(25);
     });
 
-    test('getModuleSize(version28) returns module size - 127', () => {
-        expect(getModuleSize(version28)).toEqual(129);
+    test('getModulesAmount(version28) returns module size - 127', () => {
+        expect(getModulesAmount(version28)).toEqual(129);
     });
 });

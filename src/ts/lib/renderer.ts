@@ -29,7 +29,7 @@ export function getAlignmentAnchorPos(versionNumber:number){
  * @param versionNumber 
  * @returns 
  */
-export function getModuleSize(versionNumber: number){
+export function getModulesAmount(versionNumber: number){
     let aligmenAnchorPos = getAlignmentAnchorPos(versionNumber);
 
     return aligmenAnchorPos[0] === 0
@@ -38,5 +38,6 @@ export function getModuleSize(versionNumber: number){
 
 export function drawQR(canvas: HTMLCanvasElement, data: any){
     let context = canvas.getContext('2d');
+
     fillBackground(context);
 }

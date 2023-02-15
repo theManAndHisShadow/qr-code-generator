@@ -1,4 +1,4 @@
-import { verticalFlatten } from "../src/ts/lib/helper";
+import { verticalFlatten, getAllArrayCombinations} from "../src/ts/lib/helper";
 
 let complexArray1 = [
     ['1', '6'           ],
@@ -47,5 +47,24 @@ describe('verticalFlatten() make one-dimension array from complex array', ()=> {
 
     test('verticalFlatten(complexArray4) returns simple array', ()=>{
         expect(verticalFlatten(complexArray4)).toEqual(['1', '2', '3', '4', '5', 'A', 'B', 'C', '6', 'z', '#', '7', 'x', '-', '8', '=', '9', '~', '10', '11', '12', '13', 'L', 'J', 'P']);
+    });
+});
+
+
+let testArray1 = [6, 22, 38];
+let testArray2 = [6, 30, 54, 78];
+
+describe('getAllArrayCombinations() returns new array with all combinations from origin array items', ()=> {
+    test('getAllArrayCombinations(testArray1) returns [[6, 6], [6, 22], [6, 38], [22, 6], [22, 22], [22, 38], [38, 6], [38, 22], [38, 38]]', ()=>{
+        expect(getAllArrayCombinations(testArray1)).toEqual([[6, 6], [6, 22], [6, 38], [22, 6], [22, 22], [22, 38], [38, 6], [38, 22], [38, 38]]);
+    });
+
+    test('getAllArrayCombinations(testArray2) returns [ [6, 6], [6, 30], [6, 54], [6, 78], [30, 6], [30, 30], [30, 54], [30, 78], [54, 6], [54, 30], [54, 54], [54, 78], [78, 6], [78, 30], [78, 54], [78, 78] ]', ()=>{
+        expect(getAllArrayCombinations(testArray2)).toEqual([
+            [6, 6], [6, 30], [6, 54], [6, 78], 
+            [30, 6], [30, 30], [30, 54], [30, 78], 
+            [54, 6], [54, 30], [54, 54], [54, 78], 
+            [78, 6], [78, 30], [78, 54], [78, 78]
+        ]);
     });
 });

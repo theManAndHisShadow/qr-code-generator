@@ -37,3 +37,24 @@ export function verticalFlatten(array:any[][]){
 
     return flatted;
 }
+
+
+
+/**
+ * Returns new array with all combinations from origin array items.
+ * @param originArray 
+ * @returns 
+ */
+export function getAllArrayCombinations(originArray: number[]){
+    let n = originArray.length;
+
+    let combinationsArray = [];
+
+    for(let i = 0; i <= n; i++){
+       for( let j = 0; j <= n; j++){
+        if(originArray[i] && originArray[j]) combinationsArray.push([originArray[i], originArray[j]]);
+       }
+    }
+
+    return combinationsArray;
+}

@@ -13,7 +13,7 @@ import {drawQR} from './renderer';
  */
 export function prepareData(text: string, correction: string){
     let encodedString = encodeStringToBinaryBytes(text);
-    let serviceData = getServiceData(encodedString, correction);
+    let serviceData = getServiceData(encodedString.length, correction);
     let totalLength = serviceData.serviceData.length + encodedString.length;
 
     // check multiplicity 8
@@ -23,6 +23,10 @@ export function prepareData(text: string, correction: string){
         // add extra zero data
         encodedString += '0'.repeat(shortage);
         totalLength = serviceData.serviceData.length + encodedString.length;
+    }
+
+    if(totalLength > serviceData.version.capacity) {
+        serviceData = getServiceData(totalLength, correction);
     }
 
     // fill bit stream to full capacity

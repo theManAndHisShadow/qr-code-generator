@@ -87,12 +87,12 @@ export function getOptimalQRCodeVersion(bitStreamSize:number, correction:string)
 /**
  * Returns object with all service data: version, capacity, service prefix bits; 
  * contains encoded data, but not original data (originalData = '').
- * @param bitStream encoded bits stream
+ * @param bitStreamLength encoded bits stream
  * @param correction level
  * @returns 
  */
-export function getServiceData(bitStream: string, correction: string){
-    let version = getOptimalQRCodeVersion(bitStream.length, correction);
+export function getServiceData(bitStreamLength: number, correction: string){
+    let version = getOptimalQRCodeVersion(bitStreamLength, correction);
     let serviceDataBitsSize: number = 1;
 
     if(version.number >= 1 || version.number <= 9){
@@ -104,7 +104,7 @@ export function getServiceData(bitStream: string, correction: string){
     }
 
     // 0010 - bits prefix for number and letters method encoding
-    let serviceData = `0010${decimalToBinary(bitStream.length, serviceDataBitsSize)}`;
+    let serviceData = `0010${decimalToBinary(bitStreamLength, serviceDataBitsSize)}`;
 
     return {
         version: version,

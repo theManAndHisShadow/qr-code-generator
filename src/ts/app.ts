@@ -20,6 +20,7 @@ triggerButton?.addEventListener('click', () => {
             console.log(qrCode.data);
         } else {
             // do something
+            alert('only letters [a-zA-Z0-9$%*+-./:] and "whitespaces"');
         }
     }
 });

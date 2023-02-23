@@ -10,7 +10,7 @@ Check live demo: https://themanandhisshadow.github.io/qr-code-generator/
 let qrCode = qr({
   text: 'Hello world!',
   textOrigin: input,
-  correction: correctionLevelSelector.value,
+  correction: 'M',
   size: 400,
 });
 ```
@@ -26,8 +26,8 @@ let qrCode = qr({
 1. Create variable that will contains `qr()` function result. Call the `qr()` function with the following parameters:
 * `text?: string` - text to convert;
 * `textOrigin?: HTMLInputElement` - input, that contains text to convert;
-* `correction?: string` - qr code correction level;
-* `size?: number` - qr code canvas size in pixels.
+* `correction?: string` - qr code correction level, by default is "M"
+* `size?: number` - qr code canvas size in pixels, by default is 400 pixels.
 
 2. As result, `qr()` function returns following object:
 ```js

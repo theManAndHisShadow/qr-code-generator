@@ -1,4 +1,5 @@
 import {qr} from './lib/qr';
+import { sanitizeInput } from './lib/helper';
 
 const input = document.querySelector('#app input') as HTMLInputElement;
 const correctionLevelSelector = document.querySelector('#app select') as HTMLSelectElement;
@@ -9,11 +10,12 @@ triggerButton?.addEventListener('click', () => {
     if(input) {
         if(/[а-яёА-ЯЁ]+/gm.test(input.value)) {
             alert('Allowed only letters [a-zA-Z0-9$%*+-./:] and "whitespaces"!');
+            input.value = sanitizeInput(input.value, false);
         }
 
         if(input.value.length > 0) {
             let qrCode = qr({
-                text: input.value,
+                textOrigin: input,
                 correction: correctionLevelSelector.value,
             });
     

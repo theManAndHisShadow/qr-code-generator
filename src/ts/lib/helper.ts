@@ -58,3 +58,24 @@ export function getAllArrayCombinations(originArray: number[]){
 
     return combinationsArray;
 }
+
+
+
+/**
+ * Removes all restricted symbols.
+ * @param inputText 
+ * @returns sanitized string
+ */
+export function sanitizeInput(inputText: string){
+    let sanitized = inputText.replace(/([^a-zA-Z0-9$%*+-./:\s]|\,)+/g, '');
+    let atUpperCase: Array<string>;
+
+    atUpperCase = sanitized.split('');
+
+    // unify all input data letter case
+    atUpperCase = atUpperCase.map(letter => {
+        return letter.toLocaleUpperCase();
+    });
+
+    return atUpperCase.join('');
+}

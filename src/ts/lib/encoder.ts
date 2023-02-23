@@ -1,4 +1,4 @@
-import {decimalToBinary} from './helper'
+import {decimalToBinary, sanitizeInput} from './helper'
 
 /**
  * Returns code of single letter.
@@ -59,27 +59,6 @@ function getLetterCode(letter: string){
     };
 
     return codes[letter];
-}
-
-
-
-/**
- * Removes all restricted symbols.
- * @param inputText 
- * @returns sanitized string
- */
-export function sanitizeInput(inputText: string){
-    let sanitized = inputText.replace(/([^a-zA-Z0-9$%*+-./:\s]|\,)+/g, '');
-    let atUpperCase: Array<string>;
-
-    atUpperCase = sanitized.split('');
-
-    // unify all input data letter case
-    atUpperCase = atUpperCase.map(letter => {
-        return letter.toLocaleUpperCase();
-    });
-
-    return atUpperCase.join('');
 }
 
 

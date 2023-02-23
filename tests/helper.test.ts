@@ -1,4 +1,17 @@
-import { verticalFlatten, getAllArrayCombinations} from "../src/ts/lib/helper";
+import { verticalFlatten, getAllArrayCombinations, sanitizeInput} from "../src/ts/lib/helper";
+
+let targetString1 = "Hello World!";
+let targetString2 = "ab!@# $%^.:/ /**& ---*()_+!";
+
+describe('sanitizeInput() allows only "a-zA-Z0-9$%*+-./:" symbols', ()=> {
+  test(`${targetString1} turns into "HELLO WORLD"`, ()=> {
+    expect(sanitizeInput(targetString1)).toBe('HELLO WORLD');
+  });
+
+  test(`${targetString2} turns into "AB $%.:/ /** ---*+"`, ()=> {
+    expect(sanitizeInput(targetString2)).toBe('AB $%.:/ /** ---*+');
+  });
+});
 
 let complexArray1 = [
     ['1', '6'           ],

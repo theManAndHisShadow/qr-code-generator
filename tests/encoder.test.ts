@@ -1,27 +1,15 @@
+import {decimalToBinary, sanitizeInput} from '../src/ts/lib/helper';
+
 import {
   convertAllItemsToCodes, 
   groupLettersByTwo, 
-  sanitizeInput,  
   encodeStringToBinaryBytes
 } from '../src/ts/lib/encoder';
 
-import {decimalToBinary} from '../src/ts/lib/helper'
 
 
 let targetString1 = "Hello World!";
 let targetString2 = "ab!@# $%^.:/ /**& ---*()_+!";
-
-describe('sanitizeInput() allows only "a-zA-Z0-9$%*+-./:" symbols', ()=> {
-  test(`${targetString1} turns into "HELLO WORLD"`, ()=> {
-    expect(sanitizeInput(targetString1)).toBe('HELLO WORLD');
-  });
-
-  test(`${targetString2} turns into "AB $%.:/ /** ---*+"`, ()=> {
-    expect(sanitizeInput(targetString2)).toBe('AB $%.:/ /** ---*+');
-  });
-});
-
-
 
 let sanitazedInput1 = sanitizeInput(targetString1);
 let sanitazedInput2 = sanitizeInput(targetString2);

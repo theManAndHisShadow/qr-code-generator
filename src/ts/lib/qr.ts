@@ -55,22 +55,29 @@ export function prepareData(text: string, correction: string){
 
 
 
-export function qr(params: {text: string, correction?: string, size?: number}){
-    params.correction = params.correction || 'M';
-    params.size = params.size || 400;
+export function qr(params: {text?: string, textOrigin?:HTMLInputElement, correction?: string, size?: number}){
+    if(params.text || params.textOrigin) {
+        // params.textOrigin has more priority than params.text
+        let text = params.textOrigin && params.textOrigin.value || params.text;
 
-    let data = prepareData(params.text, params.correction);
-    let groupedData = divideIntoBlocks(data);
-    let readyData = addCorrectionBytes(groupedData);
-
-    let canvas = document.createElement('canvas');
-    canvas.width = params.size;
-    canvas.height = params.size;
-
-    drawQR(canvas, readyData);
-
-    return {
-        canvas: canvas, 
-        data: readyData
-    };
+        params.correction = params.correction || 'M';
+        params.size = params.size || 400;
+    
+        let data = prepareData(text, params.correction);
+        let groupedData = divideIntoBlocks(data);
+        let readyData = addCorrectionBytes(groupedData);
+    
+        let canvas = document.createElement('canvas');
+        canvas.width = params.size;
+        canvas.height = params.size;
+    
+        if(canvas && canvas.getContext('2d')) drawQR(canvas, readyData);
+    
+        return {
+            canvas: canvas, 
+            data: readyData
+        };
+    } else {
+        throw new TypeError('qr(text?: string, textOrigin?:HTMLInputElement...): at least one text source must be passed to function');
+    }
 }

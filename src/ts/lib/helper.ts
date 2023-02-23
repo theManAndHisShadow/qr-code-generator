@@ -64,18 +64,26 @@ export function getAllArrayCombinations(originArray: number[]){
 /**
  * Removes all restricted symbols.
  * @param inputText 
+ * @param toUpperCase make all letter same (upper) case. Optional argument, by default true.
  * @returns sanitized string
  */
-export function sanitizeInput(inputText: string){
+export function sanitizeInput(inputText: string, toUpperCase?: boolean){
+    if(toUpperCase === undefined) toUpperCase = true;
+
     let sanitized = inputText.replace(/([^a-zA-Z0-9$%*+-./:\s]|\,)+/g, '');
-    let atUpperCase: Array<string>;
+   
+    if(toUpperCase === true) {
+        let atUpperCase: Array<string>;
 
-    atUpperCase = sanitized.split('');
+        atUpperCase = sanitized.split('');
+    
+        // unify all input data letter case
+        atUpperCase = atUpperCase.map(letter => {
+            return letter.toUpperCase();
+        });
+    
+        sanitized = atUpperCase.join('');
+    }
 
-    // unify all input data letter case
-    atUpperCase = atUpperCase.map(letter => {
-        return letter.toLocaleUpperCase();
-    });
-
-    return atUpperCase.join('');
+    return sanitized;
 }

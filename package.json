@@ -18,9 +18,9 @@
     "html-webpack-plugin": "^5.5.0"
   },
   "scripts": {
-    "dev": "webpack --mode development",
+    "dev": "npm run test && webpack --mode development",
     "test": "jest --config ./jest.config.js ./tests/*",
     "deploy": "npm run prod && gh-pages -d dist",
-    "prod": "webpack --mode production"
+    "prod": "npm run test && webpack --mode production"
   }
 }

@@ -1,16 +1,16 @@
-import {getAlignmentAnchorPos, getModulesAmount} from '../src/ts/lib/renderer';
+import {getAligmentPatternsPos, getModulesAmount} from '../src/ts/lib/renderer';
 
 let version1 = 1;
 let version2 = 2;
 let version28 = 28;
 
-describe('getAlignmentAnchorPos() returns aligment anchor positions', () => {
-    test('getAlignmentAnchorPos(version2) returns array [18]', () => {
-        expect(getAlignmentAnchorPos(version2)).toEqual([18]);
+describe('getAligmentPatternsPos() returns aligment anchor positions', () => {
+    test('getAligmentPatternsPos(version2) returns array [18]', () => {
+        expect(getAligmentPatternsPos(version2)).toEqual([18]);
     });
 
-    test('getAlignmentAnchorPos(version28) returns array [6, 26, 50, 74, 98, 122]', () => {
-        expect(getAlignmentAnchorPos(version28)).toEqual([6, 26, 50, 74, 98, 122]);
+    test('getAligmentPatternsPos(version28) returns array [6, 26, 50, 74, 98, 122]', () => {
+        expect(getAligmentPatternsPos(version28)).toEqual([6, 26, 50, 74, 98, 122]);
     });
 });
 

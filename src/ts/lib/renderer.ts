@@ -8,7 +8,7 @@ function fillBackground(context: CanvasRenderingContext2D){
  * @param versionNumber 
  * @returns 
  */
-export function getAlignmentAnchorPos(versionNumber:number){
+export function getAligmentPatternsPos(versionNumber:number){
     const data = [
         [0], [18], [22], [26], [30], [34], [6, 22, 38], [6, 24, 42],
         [6, 26, 46], [6, 28, 50], [6, 30, 54], [6, 32, 58], [6, 34, 62],
@@ -30,7 +30,7 @@ export function getAlignmentAnchorPos(versionNumber:number){
  * @returns 
  */
 export function getModulesAmount(versionNumber: number){
-    let aligmenAnchorPos = getAlignmentAnchorPos(versionNumber);
+    let aligmenAnchorPos = getAligmentPatternsPos(versionNumber);
 
     // + 8: 4 modules width for each side - white space around qr code!
     return (aligmenAnchorPos[0] === 0
@@ -116,19 +116,6 @@ function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
             }
         } 
     }
-}
-
-
-function _drawModule(context: CanvasRenderingContext2D, x: number, y: number, size: number, color?: string){
-    color = color || 'black';
-
-    let rect = getBoundingRect(context, size);
-
-    x = (x * size);
-    y = (y * size);
-    
-    context.fillStyle = color;
-    context.fillRect(x, y, size, size);
 }
 
 

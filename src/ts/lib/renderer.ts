@@ -41,7 +41,7 @@ export function getModulesAmount(versionNumber: number){
 
 /**
  * Draw single module (1x1).
- * @param context canvas contexn
+ * @param context canvas context
  * @param x coord
  * @param y coord
  * @param size of module
@@ -119,10 +119,49 @@ function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
 }
 
 
+function _drawModule(context: CanvasRenderingContext2D, x: number, y: number, size: number, color?: string){
+    color = color || 'black';
+
+    let rect = getBoundingRect(context, size);
+
+    x = (x * size);
+    y = (y * size);
+    
+    context.fillStyle = color;
+    context.fillRect(x, y, size, size);
+}
+
+
+
+/**
+ * Draws timing pattern.
+ * @param context canvas 2d context
+ * @param size of module
+ */
+function drawTimingPatterns(context: CanvasRenderingContext2D, size: number){
+    let rect = getBoundingRect(context, size);
+    let verticalLineStartPos = [rect.leftTop[0] + size*6, rect.leftTop[1] + size*6];
+    let verticalLineEndPos = [rect.leftBottom[0] + size*6, rect.leftBottom[1] - size*7];
+    let verticalDistance = verticalLineEndPos[1] - verticalLineStartPos[1];
+
+
+    for(let i = 0; i <= (verticalDistance / size); i++) {
+        if(i % 2 === 0) {
+            drawModule(context, verticalLineEndPos[0], verticalLineStartPos[1] + i*size, size); 
+            // Technically we can just change x ant y to get horizontal timing line!
+            drawModule(context, verticalLineStartPos[1] + i*size, verticalLineEndPos[0], size); 
+        }
+    }
+}
+
+
 
 export function drawQR(canvas: HTMLCanvasElement, data: any){
     let context = canvas.getContext('2d');
-    let moduleSize = Math.round(canvas.width / getModulesAmount(data.version.number));
+    let modulesAmount = getModulesAmount(data.version.number);
+    let moduleSize = canvas.width / modulesAmount;
+
     fillBackground(context);
-    drawFinderPatterns(context,moduleSize);
+    drawFinderPatterns(context, moduleSize);
+    drawTimingPatterns(context, moduleSize);
 }

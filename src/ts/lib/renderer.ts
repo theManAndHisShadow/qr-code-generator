@@ -224,8 +224,32 @@ function drawAligmentPatterns(context: CanvasRenderingContext2D, size: number, v
 
 
 
-function drawVersionCodes(){
+/**
+ * Draws version number data blocks.
+ * @param context canvas 2d context
+ * @param size of module
+ * @param version  of qr
+ */
+function drawVersionCodes(context: CanvasRenderingContext2D, size: number, version: number){
+    let versionData = getVersionData(version);
+    let rect = getBoundingRect(context, size);
+    let codeStartPos = [rect.leftBottom[0], rect.leftBottom[1] - 11*size];
 
+    if(versionData !== "0"){
+        let bits = versionData.match(/.{1,6}/g);
+
+        for(let i = 0; i <= bits.length; i++){
+            if(bits[i]){
+                for(let j = 0; j < bits[i].length; j++){
+                    let color = bits[i][j] == "1" ? "black" : "white";
+        
+                    drawModule(context, codeStartPos[0] + j*size, codeStartPos[1] + i*size, size, color);
+                    // Technically we can just change x ant y to draw other version code marker!
+                    drawModule(context, codeStartPos[1] + i*size, codeStartPos[0] + j*size,  size, color);
+                }
+            }
+        }
+    }
 }
 
 
@@ -239,4 +263,5 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     drawFinderPatterns(context, moduleSize);
     drawTimingPatterns(context, moduleSize);
     drawAligmentPatterns(context, moduleSize, data.version.number);
+    drawVersionCodes(context, moduleSize, data.version.number);
 }

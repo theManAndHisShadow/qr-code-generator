@@ -1,9 +1,18 @@
 import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
 
-function fillBackground(context: CanvasRenderingContext2D){
-    context.fillStyle = 'white';
+
+
+/**
+ * Fills background with selected color
+ * @param context canvas 2d context
+ * @param color fill color. By default - white
+ */
+function fillBackground(context: CanvasRenderingContext2D, color?: string){
+    context.fillStyle = color || 'white';
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 }
+
+
 
 /**
  * Returns aligment anchor positions.
@@ -24,6 +33,7 @@ export function getAligmentPatternsPos(versionNumber:number){
 
     return data[versionNumber - 1];
 }
+
 
 
 /**

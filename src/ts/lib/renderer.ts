@@ -287,6 +287,34 @@ function drawVersionCodes(context: CanvasRenderingContext2D, size: number, versi
 
 
 
+function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, size: number, correction: string, mask?: number){
+    let rect = getBoundingRect(context, size);
+
+    let correctionAndMaskData = getCorrectionMaskData(correction, mask);
+    let dataArray = [correctionAndMaskData.slice(0, 7), correctionAndMaskData.slice(7, 15).split('').reverse().join('')];
+    
+    let bottomLeftStartPos = [rect.leftBottom[0] + 8*size, rect.leftBottom[1] - 1*size];
+    let topLeftHorizontalStartPos  = [rect.leftTop[0] , rect.leftTop[1] + 8*size];
+    let topLeftVericalStartPos = [rect.leftTop[0] + 8*size, rect.leftTop[1]];
+    let topRightStartPos = [rect.rightTop[0] - 1*size, rect.rightTop[1] + 8*size];
+    
+    for(let i = 0; i < dataArray[0].length; i++){
+        drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - i*size, size, dataArray[0][i] === "1" ? "black" : "white");
+        drawModule(context, topLeftHorizontalStartPos[0] + (i == 6 ? 7 : i)*size, topLeftHorizontalStartPos[1], size, dataArray[0][i] === "1" ? "black" : "white");
+    }
+
+    for(let j = 0; j < dataArray[1].length; j++) {
+        drawModule(context, topRightStartPos[0] - j*size, topRightStartPos[1], size, dataArray[1][j] === "1" ? "black" : "white");
+        drawModule(context, topLeftVericalStartPos[0], topLeftVericalStartPos[1] + (j == 7 ? 8 : j)*size, size, dataArray[1][j] === "1" ? "black" : "white");
+    }
+    
+    drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - 7*size, size, 'black');
+
+    console.log(dataArray, correctionAndMaskData);
+}
+
+
+
 export function drawQR(canvas: HTMLCanvasElement, data: any){
     let context = canvas.getContext('2d');
     let modulesAmount = getModulesAmount(data.version.number);
@@ -294,7 +322,8 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
 
     fillBackground(context);
     drawFinderPatterns(context, moduleSize);
-    drawTimingPatterns(context, moduleSize);
     drawAligmentPatterns(context, moduleSize, data.version.number);
     drawVersionCodes(context, moduleSize, data.version.number);
+    drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+    drawTimingPatterns(context, moduleSize);
 }

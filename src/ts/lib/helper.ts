@@ -87,3 +87,21 @@ export function sanitizeInput(inputText: string, toUpperCase?: boolean){
 
     return sanitized;
 }
+
+
+
+/**
+ * Returns index of nested arrray.
+ * @param array parent array
+ * @param target child array
+ * @returns index
+ */
+export function nestedArrayIndexOf(array: number[][], target: number[]){
+    let index = -1;
+
+    array.forEach((item, i) => {
+        if(item[0] === target[0] && item[1] === target[1]) index = i;
+    });
+
+    return index;
+}

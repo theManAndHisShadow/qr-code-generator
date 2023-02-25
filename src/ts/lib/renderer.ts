@@ -36,7 +36,7 @@ export function getAligmentPatternsPos(versionNumber:number){
 
 
 
-export function getQRVersionData(versionNumber: number){
+export function getVersionData(versionNumber: number){
     const data = [
         "0","0","0","0","0","0",
         "000010011110100110","010001011100111000",
@@ -220,6 +220,12 @@ function drawAligmentPatterns(context: CanvasRenderingContext2D, size: number, v
             } 
         }
     });
+}
+
+
+
+function drawVersionCodes(){
+
 }
 
 

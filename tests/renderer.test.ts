@@ -1,4 +1,4 @@
-import {getAligmentPatternsPos, getModulesAmount, getQRVersionData} from '../src/ts/lib/renderer';
+import {getAligmentPatternsPos, getModulesAmount, getVersionData} from '../src/ts/lib/renderer';
 
 let version1 = 1;
 let version2 = 2;
@@ -30,10 +30,10 @@ describe('getModulesAmount() returns qr code module size', () => {
 
 describe('getQRVersionData() returns qr code version data bits', () => {
     test('getQRVersionData(version1) returns version data - "0"', () => {
-        expect(getQRVersionData(version1)).toEqual("0");
+        expect(getVersionData(version1)).toEqual("0");
     });
 
     test('getQRVersionData(version2) returns version data - "010001110101000110"', () => {
-        expect(getQRVersionData(version28)).toEqual("010001110101000110");
+        expect(getVersionData(version28)).toEqual("010001110101000110");
     });
 });

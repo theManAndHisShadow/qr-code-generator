@@ -1,3 +1,5 @@
+import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
+
 function fillBackground(context: CanvasRenderingContext2D){
     context.fillStyle = 'white';
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
@@ -143,6 +145,58 @@ function drawTimingPatterns(context: CanvasRenderingContext2D, size: number){
 
 
 
+/**
+ * Draws alignment patterns (starting 7th version).
+ * @param context canvas 2d context
+ * @param size of module
+ * @param version of qr
+ */
+function drawAligmentPatterns(context: CanvasRenderingContext2D, size: number, version: number){
+    let rect = getBoundingRect(context, size);
+    let aligmentPatternsPos = getAllArrayCombinations(getAligmentPatternsPos(version));
+
+    // Starting 7th version qr shoud contain aligment patterns.
+    if(version > 6) {
+        // Remove all alignment patterns near finder patterns
+        let potentialTargets = aligmentPatternsPos.filter(item => item[0] == 6);
+        let lastItem = potentialTargets[potentialTargets.length - 1];
+        let reversedLastItem = lastItem.reverse();
+
+        let firstTargetIndex = nestedArrayIndexOf(aligmentPatternsPos, potentialTargets[0]);
+        aligmentPatternsPos.splice(firstTargetIndex, 1);
+
+        let secondTargetIndex = nestedArrayIndexOf(aligmentPatternsPos, lastItem);
+        aligmentPatternsPos.splice(secondTargetIndex, 1);
+        
+        let thirdTargetIndex = nestedArrayIndexOf(aligmentPatternsPos, reversedLastItem);
+        aligmentPatternsPos.splice(thirdTargetIndex, 1);
+    }
+
+    aligmentPatternsPos.forEach((position, p) => {
+        // centrize
+        position = [position[0] - 2, position[1] - 2];
+
+        for(let i = 0; i <= 4; i++){
+            for(let j = 0; j <= 4; j++) {
+                let isEdge = ((j === 0 || i === 0) || (j === 4 || i === 4));
+                let isNotWhiteLines = ((i !== 1 && i !== 3) && (j !== 1 && j !== 3));
+    
+                if(isEdge || isNotWhiteLines){
+                    // top left pattern
+                    drawModule(
+                        context, 
+                        rect.leftTop[0] + (position[0]*size) + i*size, 
+                        rect.leftTop[1] + (position[1]*size) + j*size, 
+                        size
+                    );
+                }
+            } 
+        }
+    });
+}
+
+
+
 export function drawQR(canvas: HTMLCanvasElement, data: any){
     let context = canvas.getContext('2d');
     let modulesAmount = getModulesAmount(data.version.number);
@@ -151,4 +205,5 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     fillBackground(context);
     drawFinderPatterns(context, moduleSize);
     drawTimingPatterns(context, moduleSize);
+    drawAligmentPatterns(context, moduleSize, data.version.number);
 }

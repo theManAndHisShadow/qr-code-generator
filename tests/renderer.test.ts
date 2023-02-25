@@ -1,4 +1,4 @@
-import {getAligmentPatternsPos, getModulesAmount, getVersionData} from '../src/ts/lib/renderer';
+import {getAligmentPatternsPos, getModulesAmount, getVersionData, getCorrectionMaskData} from '../src/ts/lib/renderer';
 
 let version1 = 1;
 let version2 = 2;
@@ -35,5 +35,15 @@ describe('getQRVersionData() returns qr code version data bits', () => {
 
     test('getQRVersionData(version2) returns version data - "010001110101000110"', () => {
         expect(getVersionData(version28)).toEqual("010001110101000110");
+    });
+});
+
+describe('getCorrectionMaskData() returns qr correction mask', () => {
+    test('getCorrectionMaskData() returns "111011111000100"', () => {
+        expect(getCorrectionMaskData('L')).toEqual("111011111000100");
+    });
+
+    test('getQRVersionData(version2) returns "001001110111110"', () => {
+        expect(getCorrectionMaskData('H', 2)).toEqual("001001110111110",);
     });
 });

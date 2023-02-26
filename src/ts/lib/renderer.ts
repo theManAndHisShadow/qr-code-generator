@@ -314,6 +314,26 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
 }
 
 
+function renderStream(context: CanvasRenderingContext2D, size: number, stream: number){
+    let rect = getBoundingRect(context, size);
+
+    for(let i = 0; i <= context.canvas.width / size; i++){
+        for(let j = 0; j <= context.canvas.height / size; j++){
+
+            let x = rect.rightBottom[0] - size - i*size;
+            let y = rect.rightBottom[1] - size - j*size;
+
+            let lowerThanRightTop = y >= rect.rightTop[1];
+            let inside = x >= rect.leftTop[0];
+
+            if(lowerThanRightTop && inside){
+                drawModule(context, x, y, size, i % 2 ? 'red' : 'blue');
+            }
+        }
+    }
+}
+
+
 
 export function drawQR(canvas: HTMLCanvasElement, data: any){
     let context = canvas.getContext('2d');
@@ -321,6 +341,7 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     let moduleSize = canvas.width / modulesAmount;
 
     fillBackground(context);
+    renderStream(context, moduleSize, data.stream);
     drawFinderPatterns(context, moduleSize);
     drawAligmentPatterns(context, moduleSize, data.version.number);
     drawVersionCodes(context, moduleSize, data.version.number);

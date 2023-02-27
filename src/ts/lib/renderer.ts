@@ -314,20 +314,64 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
 }
 
 
+/**
+ * Render all bits from stream to qr code encoding region.
+ * @param context canvas 2d context
+ * @param size of module
+ * @param stream of data
+ */
 function renderStream(context: CanvasRenderingContext2D, size: number, stream: number){
     let rect = getBoundingRect(context, size);
 
-    for(let i = 0; i <= context.canvas.width / size; i++){
-        for(let j = 0; j <= context.canvas.height / size; j++){
+    // width and height in modules
+    let width = Math.floor(context.canvas.width / size);
+    let height = Math.floor(context.canvas.height / size);
 
+    // d here - direction of data (bottom up or top down)
+    // all encoding region groups to columns by 2 modules
+    for(let i = 0, d = 0; i <= width; i++, d++){
+        // only 4 variants: 0, 1, 2, 3
+        // 0, 1 - bottom up
+        // 2, 3 - top down
+        // if d > 3 (3 - max value) - reset d to zero
+        if (d > 3) d = 0;
+        
+        for(let j = 0; j <= height; j++){
+            // d cant be lower than zero!
+            if (d < 0) d = 0;
+
+            // temp
+            let color = d <= 1 ? 'red' : 'blue';
+            
             let x = rect.rightBottom[0] - size - i*size;
             let y = rect.rightBottom[1] - size - j*size;
 
-            let lowerThanRightTop = y >= rect.rightTop[1];
-            let inside = x >= rect.leftTop[0];
+            // region excluding:
+            // is module inside bounding rect
+            let insideRect = (x >= rect.leftTop[0] && x <= rect.rightTop[0]) && (y >= rect.leftTop[1]);
 
-            if(lowerThanRightTop && inside){
-                drawModule(context, x, y, size, i % 2 ? 'red' : 'blue');
+            // is module inside finder patterns
+            let rightCorner = (x >= rect.rightTop[0] - size*9) && (y <= rect.rightTop[1] + size*9);
+            let leftTopCorner = (x <= rect.leftTop[0] + size*8) && (y <= rect.leftTop[1] + size*9);
+            let leftBottomCorner = (x <= rect.leftBottom[0] + size*8) && (y >= rect.leftBottom[1] - size*9);
+
+            // is module inside sunc patterns
+            let isVericalSyncPattern = i == width - 9 - 6;
+            let isHorizontalSyncPattern = j == height - 9 - 6;
+
+            // region exluding
+            let isNotOnPatterns = 
+                !rightCorner && !leftTopCorner && !leftBottomCorner && !isVericalSyncPattern 
+                && !isHorizontalSyncPattern;
+
+            // if vertical sync line - move all left columns to left by 1 module 
+            if(isVericalSyncPattern === true){
+                d = 1;
+            }
+                
+            // draw module only result encoding region
+            if(insideRect && isNotOnPatterns){
+                drawModule(context, x, y, size, color);
             }
         }
     }

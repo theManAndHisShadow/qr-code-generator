@@ -287,6 +287,13 @@ function drawVersionCodes(context: CanvasRenderingContext2D, size: number, versi
 
 
 
+/**
+ * Draws correction level info and mask code to qr code service data region.
+ * @param context canvas 2d context
+ * @param size of module
+ * @param correction level
+ * @param mask qr code encoding data mask
+ */
 function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, size: number, correction: string, mask?: number){
     let rect = getBoundingRect(context, size);
 
@@ -309,9 +316,8 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
     }
     
     drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - 7*size, size, 'black');
-
-    console.log(dataArray, correctionAndMaskData);
 }
+
 
 
 /**

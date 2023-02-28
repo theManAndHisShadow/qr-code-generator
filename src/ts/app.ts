@@ -1,9 +1,10 @@
 import {qr} from './lib/qr';
 import { sanitizeInput } from './lib/helper';
 
-const input = document.querySelector('#app input') as HTMLInputElement;
-const correctionLevelSelector = document.querySelector('#app select') as HTMLSelectElement;
-const triggerButton = document.querySelector('#app button');
+const input = document.querySelector('#controls__inputs input') as HTMLInputElement;
+const correctionLevelSelector = document.querySelector('#controls__inputs select') as HTMLSelectElement;
+const devModeCheckbox = document.querySelector('#controls__dev-mode-checkbox input') as HTMLInputElement;
+const triggerButton = document.querySelector('#controls__trigger button');
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 
 triggerButton?.addEventListener('click', () => {
@@ -17,6 +18,7 @@ triggerButton?.addEventListener('click', () => {
             let qrCode = qr({
                 textOrigin: input,
                 correction: correctionLevelSelector.value,
+                devMode: devModeCheckbox.checked,
             });
     
             appResult.children.length > 0 

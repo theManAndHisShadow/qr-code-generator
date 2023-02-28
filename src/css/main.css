@@ -32,3 +32,19 @@
 #app #app__output {
     margin: 10px 0px;
 }
+
+#app #controls__dev-mode-checkbox {
+    font-size: 14px;
+}
+
+#app #controls__dev-mode-checkbox input {
+    position: relative;
+    cursor: pointer;
+    top: 2px;
+}
+
+.controls-item {
+    position: relative;
+    width: 100%;
+    float: left;
+}

@@ -16,7 +16,8 @@
     <div id="app">
         <div id="app__main-block">
             <div id="app__controls">
-                <label>
+
+                <label class="controls-item">
                     <input placeholder="url or text" value="Hello world!">
                     <select>
                         <option value="L">L</option>
@@ -24,8 +25,16 @@
                         <option value="Q">Q</option>
                         <option value="H">H</option>
                     </select>
-                    <button>Convert to QR</button>
                 </label>
+
+                <label id="controls__dev-mode-checkbox" class="controls-item">
+                    Dev mode:
+                    <input type="checkbox">
+                </label>
+
+                <div class="controls-item">
+                    <button>Convert to QR</button>
+                </div>
             </div>
             <div id="app__output"></div>
         </div>

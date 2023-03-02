@@ -129,6 +129,6 @@ let flattedCorrectionBytes =     [
 
 describe('addCorrectionBytes() returns new steam with correction bytes', () => {
     test('addCorrectionBytes(...some object) returns expected value', ()=>{
-        expect(readyDataObject.stream).toEqual(flattedBytes.concat(flattedCorrectionBytes));
+        expect(readyDataObject.stream).toEqual(flattedBytes.concat(flattedCorrectionBytes).join(''));
     });
 });

@@ -211,7 +211,7 @@ export function addCorrectionBytes(dataObject: any){
     let flattedCorrectionBytes = verticalFlatten(correctionBytes);
 
 
-    let newStream = flattedBytes.concat(flattedCorrectionBytes);
+    let newStream = flattedBytes.concat(flattedCorrectionBytes).join('');
     dataObject.stream = newStream;
 
     return dataObject;

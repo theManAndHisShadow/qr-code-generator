@@ -131,9 +131,9 @@ function getBoundingRect(context: CanvasRenderingContext2D, size: number){
 
     return {
         leftTop: [0 + offset, 0 + offset],
-        rightTop: [w - offset, 0 + offset],
-        leftBottom: [0 + offset, h - offset],
-        rightBottom: [w - offset, h - offset],
+        rightTop: [w - offset - size, 0 + offset],
+        leftBottom: [0 + offset, h - offset - size],
+        rightBottom: [w - offset - size, h - offset - size],
     };
 }
 
@@ -163,7 +163,7 @@ function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
                 // top right pattern
                 drawModule(
                     context, 
-                    rect.rightTop[0] - (i * size) - size, 
+                    rect.rightTop[0] - (i * size), 
                     rect.rightTop[1] + j*size, 
                     size
                 );
@@ -172,7 +172,7 @@ function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
                 drawModule(
                     context, 
                     rect.leftBottom[0] + i*size, 
-                    rect.leftBottom[1] - j*size - size, 
+                    rect.leftBottom[1] - j*size, 
                     size
                 );
             }
@@ -347,14 +347,16 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
             if (d < 0) d = 0;
 
             // temp
-            let color = d <= 1 ? 'red' : 'blue';
+            let color = d <= 1 ? '#697E8D' : '#C9A2BF';
             
-            let x = rect.rightBottom[0] - size - i*size;
-            let y = rect.rightBottom[1] - size - j*size;
+            let x = context.canvas.width - i*size;
+            let y = context.canvas.height - j*size;
 
             // region excluding:
             // is module inside bounding rect
-            let insideRect = (x >= rect.leftTop[0] && x <= rect.rightTop[0]) && (y >= rect.leftTop[1]);
+            let insideRect = 
+                (x >= rect.leftTop[0] && x <= rect.rightTop[0]) 
+                && (y >= rect.leftTop[1] && y <= rect.leftBottom[1]);
 
             // is module inside finder patterns
             let rightCorner = (x >= rect.rightTop[0] - size*9) && (y <= rect.rightTop[1] + size*9);
@@ -376,12 +378,12 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
             }
                 
             // draw module only result encoding region
-            if(insideRect && isNotOnPatterns){
+            if(insideRect){
                 drawModule(context, x, y, size, color);
             } else {
                 if(DEV_MODE) {
                     console.log(DEV_MODE, x, y);
-                    
+                    drawModule(context, x, y, size, '#808080');
                 }
             }
         }

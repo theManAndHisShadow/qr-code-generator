@@ -372,7 +372,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
             if (d < 0) d = 0;
 
             // temp
-            let color = d <= 1 ? '#697E8D' : '#C9A2BF';
+            let color = d == 1 || d == 2 ? '#697E8D' : '#C9A2BF';
             
             let x = context.canvas.width - i*size;
             let y = context.canvas.height - j*size;
@@ -389,7 +389,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
             let leftBottomCorner = (x <= rect.leftBottom[0] + size*8) && (y >= rect.leftBottom[1] - size*9);
 
             // is module inside sunc patterns
-            let isVericalSyncPattern = i == width - 9 - 6;
+            let isVericalSyncPattern = i == width - 10;
             let isHorizontalSyncPattern = j == height - 9 - 6;
 
             // region exluding
@@ -399,7 +399,9 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
 
             // if vertical sync line - move all left columns to left by 1 module 
             if(isVericalSyncPattern === true){
-                d = 1;
+                d = 2;
+                // color = 'red';
+                // console.log(isVericalSyncPattern, i)
             }
                 
             // draw module only result encoding region

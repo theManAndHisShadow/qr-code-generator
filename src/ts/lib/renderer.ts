@@ -290,7 +290,7 @@ function drawAligmentPatterns(context: CanvasRenderingContext2D, size: number, v
 function drawVersionCodes(context: CanvasRenderingContext2D, size: number, version: number){
     let versionData = getVersionData(version);
     let rect = getBoundingRect(context, size);
-    let codeStartPos = [rect.leftBottom[0], rect.leftBottom[1] - 11*size];
+    let codeStartPos = [rect.leftBottom[0], rect.leftBottom[1] - 10*size];
 
     if(versionData !== "0"){
         let bits = versionData.match(/.{1,6}/g);
@@ -324,10 +324,10 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
     let correctionAndMaskData = getCorrectionMaskData(correction, mask);
     let dataArray = [correctionAndMaskData.slice(0, 7), correctionAndMaskData.slice(7, 15).split('').reverse().join('')];
     
-    let bottomLeftStartPos = [rect.leftBottom[0] + 8*size, rect.leftBottom[1] - 1*size];
+    let bottomLeftStartPos = [rect.leftBottom[0] + 8*size, rect.leftBottom[1]];
     let topLeftHorizontalStartPos  = [rect.leftTop[0] , rect.leftTop[1] + 8*size];
     let topLeftVericalStartPos = [rect.leftTop[0] + 8*size, rect.leftTop[1]];
-    let topRightStartPos = [rect.rightTop[0] - 1*size, rect.rightTop[1] + 8*size];
+    let topRightStartPos = [rect.rightTop[0], rect.rightTop[1] + 8*size];
     
     for(let i = 0; i < dataArray[0].length; i++){
         drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - i*size, size, dataArray[0][i] === "1" ? "black" : "white");
@@ -339,7 +339,8 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
         drawModule(context, topLeftVericalStartPos[0], topLeftVericalStartPos[1] + (j == 7 ? 8 : j)*size, size, dataArray[1][j] === "1" ? "black" : "white");
     }
     
-    drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - 7*size, size, 'black');
+    let color = DEV_MODE ? "red" : "black";
+    drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - 7*size, size, color);
 }
 
 
@@ -427,8 +428,8 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     renderStream(context, moduleSize, data.stream);
     drawFinderPatterns(context, moduleSize);
     drawAligmentPatterns(context, moduleSize, data.version.number);
-    // drawVersionCodes(context, moduleSize, data.version.number);
-    // drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+    drawVersionCodes(context, moduleSize, data.version.number);
+    drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
     // drawTimingPatterns(context, moduleSize);
 
     if(DEV_MODE) {

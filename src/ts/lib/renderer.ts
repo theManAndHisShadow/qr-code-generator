@@ -336,7 +336,7 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
 
     for(let j = 0; j < dataArray[1].length; j++) {
         drawModule(context, topRightStartPos[0] - j*size, topRightStartPos[1], size, dataArray[1][j] === "1" ? "black" : "white");
-        drawModule(context, topLeftVericalStartPos[0], topLeftVericalStartPos[1] + (j == 7 ? 8 : j)*size, size, dataArray[1][j] === "1" ? "black" : "white");
+        drawModule(context, topLeftVericalStartPos[0], topLeftVericalStartPos[1] + (j >= 6 ? j+1 : j)*size, size, dataArray[1][j] === "1" ? "black" : "white");
     }
     
     let color = DEV_MODE ? "red" : "black";
@@ -407,7 +407,6 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
                 drawModule(context, x, y, size, color);
             } else {
                 if(DEV_MODE) {
-                    console.log(DEV_MODE, x, y);
                     drawModule(context, x, y, size, '#808080');
                 }
             }

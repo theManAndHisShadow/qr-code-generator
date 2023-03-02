@@ -384,13 +384,13 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
                 && (y >= rect.leftTop[1] && y <= rect.leftBottom[1]);
 
             // is module inside finder patterns
-            let rightCorner = (x >= rect.rightTop[0] - size*9) && (y <= rect.rightTop[1] + size*9);
-            let leftTopCorner = (x <= rect.leftTop[0] + size*8) && (y <= rect.leftTop[1] + size*9);
-            let leftBottomCorner = (x <= rect.leftBottom[0] + size*8) && (y >= rect.leftBottom[1] - size*9);
+            let rightCorner = (x >= rect.rightTop[0] - size*7) && (y <= rect.rightTop[1] + size*7);
+            let leftTopCorner = (x <= rect.leftTop[0] + size*7) && (y <= rect.leftTop[1] + size*7);
+            let leftBottomCorner = (x <= rect.leftBottom[0] + size*7) && (y >= rect.leftBottom[1] - size*7);
 
             // is module inside sunc patterns
             let isVericalSyncPattern = i == width - 10;
-            let isHorizontalSyncPattern = j == height - 9 - 6;
+            let isHorizontalSyncPattern = j == height - 10;
 
             // region exluding
             let isNotOnPatterns = 
@@ -405,7 +405,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
             }
                 
             // draw module only result encoding region
-            if(insideRect){
+            if(insideRect && isNotOnPatterns){
                 drawModule(context, x, y, size, color);
             } else {
                 if(DEV_MODE) {
@@ -427,13 +427,14 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
 
     fillBackground(context);
     renderStream(context, moduleSize, data.stream);
-    drawFinderPatterns(context, moduleSize);
-    drawAligmentPatterns(context, moduleSize, data.version.number);
-    drawVersionCodes(context, moduleSize, data.version.number);
-    drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
-    drawTimingPatterns(context, moduleSize);
 
     if(DEV_MODE) {
+        drawFinderPatterns(context, moduleSize);
+        drawAligmentPatterns(context, moduleSize, data.version.number);
+        drawVersionCodes(context, moduleSize, data.version.number);
+        drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+        drawTimingPatterns(context, moduleSize);
+
         let rect = getBoundingRect(context, moduleSize);
 
         drawModule(context, rect.leftTop[0], rect.leftTop[1], moduleSize, 'green');

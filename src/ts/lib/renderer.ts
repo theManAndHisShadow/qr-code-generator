@@ -252,18 +252,28 @@ function drawAligmentPatterns(context: CanvasRenderingContext2D, size: number, v
 
         for(let i = 0; i <= 4; i++){
             for(let j = 0; j <= 4; j++) {
-                let isEdge = ((j === 0 || i === 0) || (j === 4 || i === 4));
-                let isNotWhiteLines = ((i !== 1 && i !== 3) && (j !== 1 && j !== 3));
-    
-                if(isEdge || isNotWhiteLines){
-                    // top left pattern
-                    drawModule(
-                        context, 
-                        rect.leftTop[0] + (position[0]*size) + i*size, 
-                        rect.leftTop[1] + (position[1]*size) + j*size, 
-                        size
-                    );
+                let color = 'white';
+
+                let isHorizontalsBlackLine = (j == 0 || j == 4) && (i >= 0 && i <= 4);
+                let isVerticalsBlackLine = (i == 0 || i == 4) && (j >= 0 && j <= 4);
+                let isCenterBlackSquare = (i == 2 && j ==2)
+
+                // compose all conditions
+                let isBlackLine = isHorizontalsBlackLine || isVerticalsBlackLine || isCenterBlackSquare;
+
+                if(isBlackLine){
+                    color = 'black';
+                } else {
+                    color = 'white';
                 }
+
+                drawModule(
+                    context, 
+                    rect.leftTop[0] + (position[0]*size) + i*size, 
+                    rect.leftTop[1] + (position[1]*size) + j*size, 
+                    size,
+                    color
+                );
             } 
         }
     });
@@ -416,7 +426,7 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     fillBackground(context);
     renderStream(context, moduleSize, data.stream);
     drawFinderPatterns(context, moduleSize);
-    // drawAligmentPatterns(context, moduleSize, data.version.number);
+    drawAligmentPatterns(context, moduleSize, data.version.number);
     // drawVersionCodes(context, moduleSize, data.version.number);
     // drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
     // drawTimingPatterns(context, moduleSize);

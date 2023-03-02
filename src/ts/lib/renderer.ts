@@ -145,37 +145,52 @@ function getBoundingRect(context: CanvasRenderingContext2D, size: number){
  * @param size of module
  */
 function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
-    for(let i = 0; i <= 6; i++){
-        for(let j = 0; j <= 6; j++) {
-            let isEdge = ((j === 0 || i === 0) || (j === 6 || i === 6));
-            let isNotWhiteLines = ((i !== 1 && i !== 5) && (j !== 1 && j !== 5));
-            let rect = getBoundingRect(context, size);
+    let rect = getBoundingRect(context, size);
 
-            if(isEdge || isNotWhiteLines){
-                // top left pattern
-                drawModule(
-                    context, 
-                    rect.leftTop[0] + i*size, 
-                    rect.leftTop[1] + j*size, 
-                    size
-                );
+    for(let i = 0; i <= 7; i++){
+        for(let j = 0; j <= 7; j++) {
+            let color = 'white';
 
-                // top right pattern
-                drawModule(
-                    context, 
-                    rect.rightTop[0] - (i * size), 
-                    rect.rightTop[1] + j*size, 
-                    size
-                );
+            // let isEdge = ((j === 0 || i === 0) || (j === 6 || i === 6));
+            // let isNotWhiteLines = ((i !== 1 && i !== 5) && (j !== 1 && j !== 5));
+            let isHorizontalsBlackLine = (j == 0 || j == 6) && (i >= 0 && i <= 6);
+            let isVerticalsBlackLine = (i == 0 || i == 6) && (j >= 0 && j <= 6);
+            let isCenterBlackSquare = (i >= 2 && i <=4) && (j >= 2 && j <= 4);
+            let isBlackLine = isHorizontalsBlackLine || isVerticalsBlackLine || isCenterBlackSquare;
+            let isWhiteLine = 0;
 
-                // left bottom pattern
-                drawModule(
-                    context, 
-                    rect.leftBottom[0] + i*size, 
-                    rect.leftBottom[1] - j*size, 
-                    size
-                );
+            if(isBlackLine){
+                color = 'black';
+            } else if(isWhiteLine){
+                color = 'white';
             }
+
+            // top left pattern
+            drawModule(
+                context, 
+                rect.leftTop[0] + i*size, 
+                rect.leftTop[1] + j*size, 
+                size,
+                color
+            );
+
+            // top right pattern
+            drawModule(
+                context, 
+                rect.rightTop[0] - i*size, 
+                rect.rightTop[1] + j*size, 
+                size,
+                color
+            );
+
+            // left bottom pattern
+            drawModule(
+                context, 
+                rect.leftBottom[0] + i*size, 
+                rect.leftBottom[1] - j*size, 
+                size,
+                color
+            );
         } 
     }
 }
@@ -402,10 +417,10 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     fillBackground(context);
     renderStream(context, moduleSize, data.stream);
     drawFinderPatterns(context, moduleSize);
-    drawAligmentPatterns(context, moduleSize, data.version.number);
-    drawVersionCodes(context, moduleSize, data.version.number);
-    drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
-    drawTimingPatterns(context, moduleSize);
+    // drawAligmentPatterns(context, moduleSize, data.version.number);
+    // drawVersionCodes(context, moduleSize, data.version.number);
+    // drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+    // drawTimingPatterns(context, moduleSize);
 
     if(DEV_MODE) {
         let rect = getBoundingRect(context, moduleSize);

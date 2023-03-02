@@ -203,17 +203,17 @@ function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
  */
 function drawTimingPatterns(context: CanvasRenderingContext2D, size: number){
     let rect = getBoundingRect(context, size);
-    let verticalLineStartPos = [rect.leftTop[0] + size*6, rect.leftTop[1] + size*6];
+    let verticalLineStartPos = [rect.leftTop[0] + size*6, rect.leftTop[1] + size*7];
     let verticalLineEndPos = [rect.leftBottom[0] + size*6, rect.leftBottom[1] - size*7];
     let verticalDistance = verticalLineEndPos[1] - verticalLineStartPos[1];
 
 
     for(let i = 0; i <= (verticalDistance / size); i++) {
-        if(i % 2 === 0) {
-            drawModule(context, verticalLineEndPos[0], verticalLineStartPos[1] + i*size, size); 
-            // Technically we can just change x ant y to get horizontal timing line!
-            drawModule(context, verticalLineStartPos[1] + i*size, verticalLineEndPos[0], size); 
-        }
+        let color = i % 2 ? 'black' : 'white';
+
+        drawModule(context, verticalLineEndPos[0], verticalLineStartPos[1] + i*size, size, color); 
+        // Technically we can just change x ant y to get horizontal timing line!
+        drawModule(context, verticalLineStartPos[1] + i*size, verticalLineEndPos[0], size, color); 
     }
 }
 
@@ -430,7 +430,7 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     drawAligmentPatterns(context, moduleSize, data.version.number);
     drawVersionCodes(context, moduleSize, data.version.number);
     drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
-    // drawTimingPatterns(context, moduleSize);
+    drawTimingPatterns(context, moduleSize);
 
     if(DEV_MODE) {
         let rect = getBoundingRect(context, moduleSize);

@@ -1,6 +1,6 @@
 import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
 
-
+let DEV_MODE = false;
 
 /**
  * Fills background with selected color
@@ -378,6 +378,11 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
             // draw module only result encoding region
             if(insideRect && isNotOnPatterns){
                 drawModule(context, x, y, size, color);
+            } else {
+                if(DEV_MODE) {
+                    console.log(DEV_MODE, x, y);
+                    
+                }
             }
         }
     }
@@ -390,6 +395,8 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     let modulesAmount = getModulesAmount(data.version.number);
     let moduleSize = canvas.width / modulesAmount;
 
+    DEV_MODE = data.devMode;
+
     fillBackground(context);
     renderStream(context, moduleSize, data.stream);
     drawFinderPatterns(context, moduleSize);
@@ -398,7 +405,7 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
     drawTimingPatterns(context, moduleSize);
 
-    if(data.devMode) {
+    if(DEV_MODE) {
         let rect = getBoundingRect(context, moduleSize);
 
         drawModule(context, rect.leftTop[0], rect.leftTop[1], moduleSize, 'green');

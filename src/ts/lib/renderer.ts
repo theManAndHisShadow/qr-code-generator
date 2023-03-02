@@ -151,17 +151,16 @@ function drawFinderPatterns(context: CanvasRenderingContext2D, size: number){
         for(let j = 0; j <= 7; j++) {
             let color = 'white';
 
-            // let isEdge = ((j === 0 || i === 0) || (j === 6 || i === 6));
-            // let isNotWhiteLines = ((i !== 1 && i !== 5) && (j !== 1 && j !== 5));
             let isHorizontalsBlackLine = (j == 0 || j == 6) && (i >= 0 && i <= 6);
             let isVerticalsBlackLine = (i == 0 || i == 6) && (j >= 0 && j <= 6);
             let isCenterBlackSquare = (i >= 2 && i <=4) && (j >= 2 && j <= 4);
+
+            // compose all conditions
             let isBlackLine = isHorizontalsBlackLine || isVerticalsBlackLine || isCenterBlackSquare;
-            let isWhiteLine = 0;
 
             if(isBlackLine){
                 color = 'black';
-            } else if(isWhiteLine){
+            } else {
                 color = 'white';
             }
 

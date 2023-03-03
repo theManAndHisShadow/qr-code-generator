@@ -48,3 +48,24 @@
     width: 100%;
     float: left;
 }
+
+#dev {
+    background: #ffffff12;
+    max-width: 230px;
+    width: fit-content;
+    min-height: 17px;
+    word-break: break-word;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #ffffff26;
+}
+
+#dev.non-active {
+    opacity: 0.25;
+}
+
+#dev-mode-checkbox input[type="checkbox"] {
+    cursor: pointer;
+}

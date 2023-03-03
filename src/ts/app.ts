@@ -3,7 +3,8 @@ import { sanitizeInput } from './lib/helper';
 
 const input = document.querySelector('#controls__inputs input') as HTMLInputElement;
 const correctionLevelSelector = document.querySelector('#controls__inputs select') as HTMLSelectElement;
-const devModeCheckbox = document.querySelector('#controls__dev-mode-checkbox input') as HTMLInputElement;
+const devModeCheckbox = document.querySelector('#dev-mode-checkbox input') as HTMLInputElement;
+const devInfo = document.querySelector('#dev-info') as HTMLDivElement;
 const triggerButton = document.querySelector('#controls__trigger button');
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 
@@ -26,6 +27,10 @@ triggerButton?.addEventListener('click', () => {
                 : appResult.appendChild(qrCode.canvas);
     
             console.log(qrCode.data);
+            
+            if(devModeCheckbox.checked){
+                devInfo.innerHTML = JSON.stringify(qrCode.data);
+            } 
         }
     }
 });

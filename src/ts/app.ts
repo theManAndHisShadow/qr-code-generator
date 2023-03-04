@@ -7,6 +7,7 @@ const triggerButton = document.querySelector('#controls__trigger button');
 
 const devModeCheckbox = document.querySelector('#dev__mode-checkbox input') as HTMLInputElement;
 const devContainer = document.querySelector('#dev') as HTMLInputElement;
+const devToolsContainer = document.querySelector('#dev__tools') as HTMLInputElement;
 const devInfo = document.querySelector('#dev__info') as HTMLDivElement;
 
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
@@ -14,9 +15,11 @@ const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 devModeCheckbox?.addEventListener('click', () => {
     if(devModeCheckbox.checked){
         devContainer.classList.remove('non-active');
+        devToolsContainer.removeAttribute('hidden');
     } else {
         devContainer.classList.add('non-active');
         devInfo.innerHTML = "";
+        devToolsContainer.setAttribute('hidden', '');
     }
 });
 

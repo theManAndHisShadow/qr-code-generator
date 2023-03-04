@@ -351,12 +351,15 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
  * @param size of module
  * @param stream of data
  */
-function renderStream(context: CanvasRenderingContext2D, size: number, stream: number){
+function renderStream(context: CanvasRenderingContext2D, size: number, stream: string){
     let rect = getBoundingRect(context, size);
 
     // width and height in modules
     let width = Math.floor(context.canvas.width / size);
     let height = Math.floor(context.canvas.height / size);
+
+    //[(width - 5), (height - 5), 1]
+    let freeModules: number[][] = [];
 
     // d here - direction of data (bottom up or top down)
     // all encoding region groups to columns by 2 modules
@@ -406,14 +409,96 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: n
                 
             // draw module only result encoding region
             if(insideRect && isNotOnPatterns){
-                drawModule(context, x, y, size, color);
+                let direction = d == 1 || d == 2 ? 1 : -1;
+                // let last_x = freeModules[freeModules.length - 1][0];
+                // let last_y = freeModules[freeModules.length - 1][1];
+
+                // let module_x = i % 2 === 0 ? last_x + (-1) : last_x + 1;
+                // let module_y = i % 2 === 0 ? last_y : last_y + (-1);
+
+                // drawModule(context, x, y, size, color);
+                let a =[Math.round(x/size), Math.round(y/size), (d == 1 || d == 2 ? 1 : -1)];
+                
+                freeModules.push(a);
             } else {
                 if(DEV_MODE) {
                     drawModule(context, x, y, size, '#808080');
                 }
             }
         }
+
+        // freeModules.forEach((module, i) => {
+        //     let direction = module[2];
+
+        //     drawModule(context, module[0]*size, module[1]*size, size, stream[i] == "1" ? 'black' : 'white');
+        // });
+
     }
+
+    let columns = [];
+    let startValue = freeModules[0][0];
+    let copy = [...freeModules];
+
+    for(let p = 0; p <= copy.length; p++) {
+        let start = copy.findIndex(item => item[0] == startValue);
+        let end = copy.findIndex(item => item[0] == startValue - 2);
+
+        if(start > -1 && end > -1) {
+            let part = copy.slice(start, end);
+            let part_a = part.slice(0, part.length / 2);
+            let part_b = part.slice(part.length / 2);
+            let shuffled = [];
+
+            console.log(part_a, part_b, part.length / 2);
+
+            for(let s = 0; s <= part_a.length; s++) {
+                if(part_a && part_a[s]){
+                    // console.log(part_a[s][2]);
+
+                    if(part_a[s][2] == 1) {
+                        shuffled.push(part_a[s]);
+                        shuffled.push(part_b[s]);
+                    } else {
+                        shuffled.push(part_b[s]);
+                        shuffled.push(part_a[s]);
+                    }
+                }
+            }
+
+            if(shuffled[0][2] == -1) shuffled = shuffled.reverse();
+            columns.push(shuffled);
+        } else {
+            // console.log(end);
+        }
+
+        startValue = startValue - 2;
+    }
+
+    let order = columns.flat(1);
+    order.forEach((module, i) => {
+        if(module) {
+            let direction = module[2];
+            let x = 0;
+            let y = 0;
+
+            drawModule(context, module[0]*size, module[1]*size, size, stream[i] == "1" ? 'black' : 'white');
+        }
+    });
+
+    // columns[0].forEach((module, i) => {
+    //     if(module !== undefined) {
+    //         drawModule(context, module[0]*size, module[1]*size, size, stream[i] == "1" ? 'black' : 'white');
+    //     }
+    // });
+
+    // columns[1].forEach((module, i) => {
+    //     if(module !== undefined) {
+    //         drawModule(context, module[0]*size, module[1]*size, size, stream[i] == "1" ? 'black' : 'white');
+    //     }
+    // });
+
+
+    console.log(columns, freeModules);
 }
 
 
@@ -427,14 +512,13 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
 
     fillBackground(context);
     renderStream(context, moduleSize, data.stream);
+    drawFinderPatterns(context, moduleSize);
+    drawAligmentPatterns(context, moduleSize, data.version.number);
+    drawVersionCodes(context, moduleSize, data.version.number);
+    drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+    drawTimingPatterns(context, moduleSize);
 
     if(DEV_MODE) {
-        drawFinderPatterns(context, moduleSize);
-        drawAligmentPatterns(context, moduleSize, data.version.number);
-        drawVersionCodes(context, moduleSize, data.version.number);
-        drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
-        drawTimingPatterns(context, moduleSize);
-
         let rect = getBoundingRect(context, moduleSize);
 
         drawModule(context, rect.leftTop[0], rect.leftTop[1], moduleSize, 'green');

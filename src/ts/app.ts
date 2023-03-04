@@ -34,7 +34,9 @@ triggerButton?.addEventListener('click', () => {
             let qrCode = qr({
                 textOrigin: input,
                 correction: correctionLevelSelector.value,
-                devMode: devModeCheckbox.checked,
+                dev: {
+                    state: devModeCheckbox.checked,
+                },
             });
     
             appResult.children.length > 0 

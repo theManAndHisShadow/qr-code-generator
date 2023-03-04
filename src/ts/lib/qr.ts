@@ -55,8 +55,10 @@ export function prepareData(text: string, correction: string){
 
 
 
-export function qr(params: {text?: string, textOrigin?:HTMLInputElement, correction?: string, size?: number, devMode?: boolean}){
-    params.devMode = params.devMode || false;
+export function qr(params: {text?: string, textOrigin?:HTMLInputElement, correction?: string, size?: number, dev?: object}){
+    params.dev = params.dev || {
+        state: false,
+    };
 
     if(params.text || params.textOrigin) {
         // params.textOrigin has more priority than params.text
@@ -69,7 +71,7 @@ export function qr(params: {text?: string, textOrigin?:HTMLInputElement, correct
         let groupedData = divideIntoBlocks(data);
         let readyData = addCorrectionBytes(groupedData);
         
-        readyData.devMode = params.devMode;
+        readyData.dev = params.dev;
     
         let canvas = document.createElement('canvas');
         canvas.width = params.size;

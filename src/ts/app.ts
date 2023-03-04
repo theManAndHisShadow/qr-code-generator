@@ -3,17 +3,19 @@ import { sanitizeInput } from './lib/helper';
 
 const input = document.querySelector('#controls__inputs input') as HTMLInputElement;
 const correctionLevelSelector = document.querySelector('#controls__inputs select') as HTMLSelectElement;
-const devModeCheckbox = document.querySelector('#dev-mode-checkbox input') as HTMLInputElement;
-const devInfoContainer = document.querySelector('#dev') as HTMLInputElement;
-const devInfo = document.querySelector('#dev__info') as HTMLDivElement;
 const triggerButton = document.querySelector('#controls__trigger button');
+
+const devModeCheckbox = document.querySelector('#dev__mode-checkbox input') as HTMLInputElement;
+const devContainer = document.querySelector('#dev') as HTMLInputElement;
+const devInfo = document.querySelector('#dev__info') as HTMLDivElement;
+
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 
 devModeCheckbox?.addEventListener('click', () => {
     if(devModeCheckbox.checked){
-        devInfoContainer.classList.remove('non-active');
+        devContainer.classList.remove('non-active');
     } else {
-        devInfoContainer.classList.add('non-active');
+        devContainer.classList.add('non-active');
         devInfo.innerHTML = "";
     }
 });

@@ -50,6 +50,7 @@
 }
 
 #dev {
+    position: fixed;
     background: #ffffff12;
     max-width: 230px;
     width: fit-content;
@@ -66,6 +67,8 @@
     opacity: 0.25;
 }
 
-#dev-mode-checkbox input[type="checkbox"] {
+#dev__mode-checkbox input[type="checkbox"] {
+    position: relative;
+    top: 1px;
     cursor: pointer;
 }

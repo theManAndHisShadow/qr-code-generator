@@ -9,11 +9,11 @@ const devInfo = document.querySelector('#dev__info div') as HTMLDivElement;
 devModeCheckbox?.addEventListener('click', () => {
     if(devModeCheckbox.checked){
         devContainer.classList.remove('non-active');
-        devInfo.removeAttribute('hidden');
+        devInfo.parentElement.removeAttribute('hidden');
         devRenderParamsContainer.removeAttribute('hidden');
     } else {
         devContainer.classList.add('non-active');
-        devInfo.setAttribute('hidden', '');
+        devInfo.parentElement.setAttribute('hidden', '');
         devRenderParamsContainer.setAttribute('hidden', '');
     }
 });

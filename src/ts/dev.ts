@@ -47,11 +47,11 @@ export function parseDevParams(){
     const signature = 'data-dev-param';
 
     Array.from(document.querySelectorAll(`[${signature}]`))
-        .forEach(input => {
-        let pair = input.getAttribute(signature).split(':');
+        .forEach((input: HTMLInputElement) => {
+        let key = input.getAttribute(signature);
 
-        Object.defineProperty(devParams, pair[0], {
-            value: Boolean(pair[1]),
+        Object.defineProperty(devParams, key, {
+            value: Boolean(input.checked),
         });
     });
 

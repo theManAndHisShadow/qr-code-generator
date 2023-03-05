@@ -4,6 +4,7 @@ let DEV_MODE = {
     state: false,
     finderPatterns: false,
     boundingRectCorners: false,
+    queitRegion: false,
 };
 
 /**
@@ -425,7 +426,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
                 
                 freeModules.push(a);
             } else {
-                if(DEV_MODE) {
+                if(DEV_MODE.state === true && DEV_MODE.queitRegion === true) {
                     drawModule(context, x, y, size, '#808080');
                 }
             }

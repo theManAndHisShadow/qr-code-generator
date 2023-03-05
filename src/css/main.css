@@ -67,6 +67,10 @@
     opacity: 0.25;
 }
 
+#dev.non-active #dev__mode-checkbox {
+    margin-bottom: 0px;
+}
+
 #dev input[type="checkbox"] {
     position: relative;
     top: 1px;

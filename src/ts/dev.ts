@@ -1,7 +1,7 @@
 const devModeCheckbox = document.querySelector('#dev__mode-checkbox input') as HTMLInputElement;
 const devContainer = document.querySelector('#dev') as HTMLInputElement;
-const devToolsContainer = document.querySelector('#dev__tools') as HTMLInputElement;
-const devInfo = document.querySelector('#dev__info') as HTMLDivElement;
+const devRenderParamsContainer = document.querySelector('#dev__render-params') as HTMLInputElement;
+const devInfo = document.querySelector('#dev__info div') as HTMLDivElement;
 
 
 
@@ -10,11 +10,11 @@ devModeCheckbox?.addEventListener('click', () => {
     if(devModeCheckbox.checked){
         devContainer.classList.remove('non-active');
         devInfo.removeAttribute('hidden');
-        devToolsContainer.removeAttribute('hidden');
+        devRenderParamsContainer.removeAttribute('hidden');
     } else {
         devContainer.classList.add('non-active');
         devInfo.setAttribute('hidden', '');
-        devToolsContainer.setAttribute('hidden', '');
+        devRenderParamsContainer.setAttribute('hidden', '');
     }
 });
 

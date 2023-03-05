@@ -77,21 +77,27 @@
     cursor: pointer;
 }
 
-#dev__mode-checkbox, #dev__tools, #dev__info {
+#dev__mode-checkbox, #dev__render-params, #dev__info {
     position: relative;
     float: left;
 }
 
-#dev__mode-checkbox, #dev__tools{
+#dev__mode-checkbox, #dev__render-params{
     margin-bottom: 5px;
 }
 
-#dev__info, #dev__tools {
+#dev__info, #dev__render-params {
     border-top: 1px solid #5f6064;
     padding-top: 7px;
 }
 
-#dev__tools label {
+#dev__render-params label {
     position: relative;
     float: left;
+}
+
+#dev h3 {
+    font-weight: normal;
+    font-size: 17px;
+    margin-bottom: 2px;
 }

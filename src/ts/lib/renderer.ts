@@ -340,7 +340,7 @@ function drawCorrectionLevelAndMaskDataCodes(context: CanvasRenderingContext2D, 
         drawModule(context, topLeftVericalStartPos[0], topLeftVericalStartPos[1] + (j >= 6 ? j+1 : j)*size, size, dataArray[1][j] === "1" ? "black" : "white");
     }
     
-    let color = DEV_MODE ? "red" : "black";
+    let color = DEV_MODE.state === true ? "red" : "black";
     drawModule(context, bottomLeftStartPos[0], bottomLeftStartPos[1] - 7*size, size, color);
 }
 
@@ -360,7 +360,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
     let height = Math.floor(context.canvas.height / size);
 
     //[(width - 5), (height - 5), 1]
-    let freeModules: number[][] = [];
+    let freeModules: any[] = [];
 
     // d here - direction of data (bottom up or top down)
     // all encoding region groups to columns by 2 modules
@@ -376,7 +376,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
             if (d < 0) d = 0;
 
             // temp
-            let color = d == 1 || d == 2 ? '#697E8D' : '#C9A2BF';
+            let color = d == 1 || d == 2 ? {bright: '#943126', pale: '#F1948A'} : {bright: '#21618C', pale: '#85C1E9'};
             
             let x = context.canvas.width - i*size;
             let y = context.canvas.height - j*size;
@@ -418,12 +418,17 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
                 // let module_y = i % 2 === 0 ? last_y : last_y + (-1);
 
                 // drawModule(context, x, y, size, color);
-                let a =[Math.round(x/size), Math.round(y/size), (d == 1 || d == 2 ? 1 : -1)];
+                let a = {
+                    x: Math.round(x/size), 
+                    y: Math.round(y/size), 
+                    direction: (d == 1 || d == 2 ? 1 : -1), 
+                    columnColor: color
+                };
                 
                 freeModules.push(a);
             } else {
                 if(DEV_MODE.state === true && DEV_MODE.queitRegion === true) {
-                    drawModule(context, x, y, size, '#808080');
+                    drawModule(context, x, y, size, '#ABB2B9');
                 }
             }
         }
@@ -437,12 +442,12 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
     }
 
     let columns = [];
-    let startValue = freeModules[0][0];
+    let startValue = freeModules[0].x;
     let copy = [...freeModules];
 
     for(let p = 0; p <= copy.length; p++) {
-        let start = copy.findIndex(item => item[0] == startValue);
-        let end = copy.findIndex(item => item[0] == startValue - 2);
+        let start = copy.findIndex(item => item.x == startValue);
+        let end = copy.findIndex(item => item.x == startValue - 2);
 
         if(start > -1 && end > -1) {
             let part = copy.slice(start, end);
@@ -456,7 +461,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
                 if(part_a && part_a[s]){
                     // console.log(part_a[s][2]);
 
-                    if(part_a[s][2] == 1) {
+                    if(part_a[s].direction == 1) {
                         shuffled.push(part_a[s]);
                         shuffled.push(part_b[s]);
                     } else {
@@ -466,7 +471,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
                 }
             }
 
-            if(shuffled[0][2] == -1) shuffled = shuffled.reverse();
+            if(shuffled[0].direction == -1) shuffled = shuffled.reverse();
             columns.push(shuffled);
         } else {
             // console.log(end);
@@ -476,13 +481,14 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
     }
 
     let order = columns.flat(1);
+    
     order.forEach((module, i) => {
-        if(module) {
-            let direction = module[2];
-            let x = 0;
-            let y = 0;
-
-            drawModule(context, module[0]*size, module[1]*size, size, stream[i] == "1" ? 'black' : 'white');
+        if(module) {            
+            if(DEV_MODE.state === true && DEV_MODE.encodedDataDirectionColumns === true){
+                drawModule(context, module.x*size, module.y*size, size, stream[i] == "1" ? module.columnColor.bright : module.columnColor.pale);
+            } else {
+                drawModule(context, module.x*size, module.y*size, size, stream[i] == "1" ? "black" : "white");
+            }
         }
     });
 
@@ -515,10 +521,11 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
 
     if(DEV_MODE.state === true) {
         renderStream(context, moduleSize, data.stream);
+
         if(DEV_MODE.finderPatterns === true) drawFinderPatterns(context, moduleSize);
         if(DEV_MODE.aligmentPatterns === true) drawAligmentPatterns(context, moduleSize, data.version.number);
-        drawVersionCodes(context, moduleSize, data.version.number);
-        drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+        if(DEV_MODE.versionCodes === true) drawVersionCodes(context, moduleSize, data.version.number);
+        if(DEV_MODE.correctionLevelAndMaskCodes === true) drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
         if(DEV_MODE.timingPatterns === true) drawTimingPatterns(context, moduleSize);
 
         if(DEV_MODE.boundingRectCorners){

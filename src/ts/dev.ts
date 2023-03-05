@@ -50,6 +50,9 @@ export function getDefaultDevParams(){
         finderPatterns: false,
         timingPatterns: false,
         aligmentPatterns: false,
+        versionCodes: false,
+        correctionLevelAndMaskCodes: false,
+        encodedDataDirectionColumns: false,
     };
 
     return defaultDevParams;

@@ -1,32 +1,18 @@
-import {parseDevParams} from './dev'
-import {qr} from './lib/qr';
+import { parseDevParams, printDevInfo } from './dev'
+import { qr } from './lib/qr';
 import { sanitizeInput } from './lib/helper';
+
+
 
 const input = document.querySelector('#controls__inputs input') as HTMLInputElement;
 const correctionLevelSelector = document.querySelector('#controls__inputs select') as HTMLSelectElement;
 const triggerButton = document.querySelector('#controls__trigger button');
-
-const devModeCheckbox = document.querySelector('#dev__mode-checkbox input') as HTMLInputElement;
-const devContainer = document.querySelector('#dev') as HTMLInputElement;
-const devToolsContainer = document.querySelector('#dev__tools') as HTMLInputElement;
-const devInfo = document.querySelector('#dev__info') as HTMLDivElement;
-
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 
-devModeCheckbox?.addEventListener('click', () => {
-    if(devModeCheckbox.checked){
-        devContainer.classList.remove('non-active');
-        devToolsContainer.removeAttribute('hidden');
-    } else {
-        devContainer.classList.add('non-active');
-        devInfo.innerHTML = "";
-        devToolsContainer.setAttribute('hidden', '');
-    }
-});
+
 
 triggerButton?.addEventListener('click', () => {
     let devParams = parseDevParams();
-    devParams.state = devModeCheckbox.checked;
 
     if(input) {
         if(/[а-яёА-ЯЁ]+/gm.test(input.value)) {
@@ -44,18 +30,9 @@ triggerButton?.addEventListener('click', () => {
             appResult.children.length > 0 
                 ? appResult.replaceChild(qrCode.canvas, appResult.children[0])
                 : appResult.appendChild(qrCode.canvas);
-    
+                
+            printDevInfo(qrCode);
             console.log(qrCode.data);
-            
-            if(devModeCheckbox.checked){
-                let devData = {
-                    correction: qrCode.data.correction,
-                    version: qrCode.data.version,
-                }
-                devInfo.innerHTML = JSON.stringify(devData);
-            } else {
-                devInfo.innerHTML = "";
-            }
         }
     }
 });

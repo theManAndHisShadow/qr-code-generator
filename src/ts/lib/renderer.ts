@@ -1,6 +1,9 @@
 import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
 
-let DEV_MODE = false;
+let DEV_MODE = {
+    state: false,
+    toggleFinderPatterns: false,
+};
 
 /**
  * Fills background with selected color
@@ -508,22 +511,30 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     let modulesAmount = getModulesAmount(data.version.number);
     let moduleSize = canvas.width / modulesAmount;
 
-    DEV_MODE = data.devMode;
+    DEV_MODE = data.dev;
 
-    fillBackground(context);
-    renderStream(context, moduleSize, data.stream);
-    drawFinderPatterns(context, moduleSize);
-    drawAligmentPatterns(context, moduleSize, data.version.number);
-    drawVersionCodes(context, moduleSize, data.version.number);
-    drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
-    drawTimingPatterns(context, moduleSize);
+    if(DEV_MODE.state === true) {
+        fillBackground(context);
+        renderStream(context, moduleSize, data.stream);
+        if(DEV_MODE.toggleFinderPatterns === true) drawFinderPatterns(context, moduleSize);
+        drawAligmentPatterns(context, moduleSize, data.version.number);
+        drawVersionCodes(context, moduleSize, data.version.number);
+        drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+        drawTimingPatterns(context, moduleSize);
 
-    if(DEV_MODE) {
         let rect = getBoundingRect(context, moduleSize);
 
         drawModule(context, rect.leftTop[0], rect.leftTop[1], moduleSize, 'green');
         drawModule(context, rect.leftBottom[0], rect.leftBottom[1], moduleSize, 'green');
         drawModule(context, rect.rightBottom[0], rect.rightBottom[1], moduleSize, 'green');
         drawModule(context, rect.rightTop[0], rect.rightTop[1], moduleSize, 'green');
+    } else {
+        fillBackground(context);
+        renderStream(context, moduleSize, data.stream);
+        drawFinderPatterns(context, moduleSize);
+        drawAligmentPatterns(context, moduleSize, data.version.number);
+        drawVersionCodes(context, moduleSize, data.version.number);
+        drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
+        drawTimingPatterns(context, moduleSize);
     }
 }

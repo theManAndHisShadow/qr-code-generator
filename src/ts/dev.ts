@@ -5,21 +5,6 @@ const devInfo = document.querySelector('#dev__info div') as HTMLDivElement;
 
 
 
-// check dev mode state
-devModeCheckbox?.addEventListener('click', () => {
-    if(devModeCheckbox.checked){
-        devContainer.classList.remove('non-active');
-        devInfo.parentElement.removeAttribute('hidden');
-        devRenderParamsContainer.removeAttribute('hidden');
-    } else {
-        devContainer.classList.add('non-active');
-        devInfo.parentElement.setAttribute('hidden', '');
-        devRenderParamsContainer.setAttribute('hidden', '');
-    }
-});
-
-
-
 /**
  * Print dev info to HTML page.
  * @param qrCode data object
@@ -43,16 +28,22 @@ export function printDevInfo(qrCode: any){
  * @returns object
  */
 export function getDefaultDevParams(){
-    let defaultDevParams = {
+    interface Settings {
+        [key: string]: boolean
+    }
+
+    let defaultDevParams:Settings = {
+        // main property, state of dev mode
         state: false,
-        queitRegion: false,
-        boundingRectCorners: false,
-        finderPatterns: false,
-        timingPatterns: false,
-        aligmentPatterns: false,
-        versionCodes: false,
-        correctionLevelAndMaskCodes: false,
-        encodedDataDirectionColumns: false,
+
+        queitRegion: true,
+        boundingRectCorners: true,
+        finderPatterns: true,
+        timingPatterns: true,
+        aligmentPatterns: true,
+        versionCodes: true,
+        correctionLevelAndMaskCodes: true,
+        encodedDataDirectionColumns: true,
     };
 
     return defaultDevParams;
@@ -61,22 +52,77 @@ export function getDefaultDevParams(){
 
 
 /**
- * Parses all development parameters stored in the data-dev-param attribute 
- * and combines them into a single object.
- * @returns object
+ * Shows or hides dev block container and inner elements.
+ * @param state state of dev mode
  */
-export function parseDevParams(){
-    const devParams = {state: devModeCheckbox.checked};
+function toggleDevBlockContainer(state: boolean){
+    if(state === false) {
+        devContainer.classList.add('non-active');
+        devInfo.parentElement.setAttribute('hidden', '');
+        devRenderParamsContainer.setAttribute('hidden', '');
+    } else {
+        devContainer.classList.remove('non-active');
+        devInfo.parentElement.removeAttribute('hidden');
+        devRenderParamsContainer.removeAttribute('hidden');
+    }
+}
+
+
+
+/**
+ * Renders all setting items states on HTML dev block.
+ * @param paramsObject dev oarameters object
+ */
+function renderSettingsStates(paramsObject: any){
     const signature = 'data-dev-param';
+    const keys = Object.keys(paramsObject);
 
-    Array.from(document.querySelectorAll(`[${signature}]`))
-        .forEach((input: HTMLInputElement) => {
-        let key = input.getAttribute(signature);
+    toggleDevBlockContainer(paramsObject.state);
 
-        Object.defineProperty(devParams, key, {
-            value: Boolean(input.checked),
+    keys.forEach(key => {
+        // all dev params checkbopx marked by attr "data-dev-param"
+        // loop all and set checked state from localeStorage
+        let checkbox: HTMLInputElement = document.querySelector(`[${signature}="${key}"]`);
+        checkbox.checked = paramsObject[key];
+        
+        // add event listener for all target checkboxes
+        checkbox.addEventListener('click', () => {
+            // save new state to localStorage
+            updateSettingsAtLocalStorage(key, checkbox.checked);
+            toggleDevBlockContainer(devModeCheckbox.checked);
         });
     });
+}
+
+
+
+/**
+ * Updates dev param at local storage.
+ * @param propertyName 
+ * @param value 
+ */
+function updateSettingsAtLocalStorage(propertyName: string, value: boolean){
+    let devParams = JSON.parse(localStorage.getItem('devParams'));
+    devParams[propertyName] = value;
+
+    localStorage.setItem('devParams', JSON.stringify(devParams))
+}
+
+
+
+/**
+ * Loads dev params object, renders it at HTML, 
+ * adds click ev listener at checkbox for dev param properties updating.
+ * @returns dev param object.
+ */
+export function loadDevParams(){
+    if(!localStorage.getItem('devParams')) {
+        localStorage.setItem('devParams', JSON.stringify(getDefaultDevParams()));
+    }
+
+    let devParams = JSON.parse(localStorage.getItem('devParams'));
+
+    renderSettingsStates(devParams);
 
     return devParams;
 }

@@ -32,3 +32,72 @@
 #app #app__output {
     margin: 10px 0px;
 }
+
+#app #controls__dev-mode-checkbox {
+    font-size: 14px;
+}
+
+#app #controls__dev-mode-checkbox input {
+    position: relative;
+    cursor: pointer;
+    top: 2px;
+}
+
+.controls-item {
+    position: relative;
+    width: 100%;
+    float: left;
+}
+
+#dev {
+    position: fixed;
+    background: #ffffff12;
+    max-width: 230px;
+    width: fit-content;
+    min-height: 17px;
+    word-break: break-word;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid #ffffff26;
+}
+
+#dev.non-active {
+    opacity: 0.25;
+}
+
+#dev.non-active #dev__mode-checkbox {
+    margin-bottom: 0px;
+}
+
+#dev input[type="checkbox"] {
+    position: relative;
+    top: 1px;
+    cursor: pointer;
+}
+
+#dev__mode-checkbox, #dev__render-params, #dev__info {
+    position: relative;
+    float: left;
+}
+
+#dev__mode-checkbox, #dev__render-params{
+    margin-bottom: 5px;
+}
+
+#dev__info, #dev__render-params {
+    border-top: 1px solid #5f6064;
+    padding-top: 7px;
+}
+
+#dev__render-params label {
+    position: relative;
+    float: left;
+}
+
+#dev h3 {
+    font-weight: normal;
+    font-size: 17px;
+    margin-bottom: 2px;
+}

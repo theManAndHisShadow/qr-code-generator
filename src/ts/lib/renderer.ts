@@ -2,7 +2,7 @@ import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
 
 let DEV_MODE = {
     state: false,
-    toggleFinderPatterns: false,
+    finderPatterns: false,
 };
 
 /**
@@ -516,7 +516,7 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
     if(DEV_MODE.state === true) {
         fillBackground(context);
         renderStream(context, moduleSize, data.stream);
-        if(DEV_MODE.toggleFinderPatterns === true) drawFinderPatterns(context, moduleSize);
+        if(DEV_MODE.finderPatterns === true) drawFinderPatterns(context, moduleSize);
         drawAligmentPatterns(context, moduleSize, data.version.number);
         drawVersionCodes(context, moduleSize, data.version.number);
         drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)

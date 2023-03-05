@@ -1,3 +1,4 @@
+import {parseDevParams} from './dev'
 import {qr} from './lib/qr';
 import { sanitizeInput } from './lib/helper';
 
@@ -24,6 +25,9 @@ devModeCheckbox?.addEventListener('click', () => {
 });
 
 triggerButton?.addEventListener('click', () => {
+    let devParams = parseDevParams();
+    devParams.state = devModeCheckbox.checked;
+
     if(input) {
         if(/[а-яёА-ЯЁ]+/gm.test(input.value)) {
             alert('Allowed only letters [a-zA-Z0-9$%*+-./:] and "whitespaces"!');
@@ -34,9 +38,7 @@ triggerButton?.addEventListener('click', () => {
             let qrCode = qr({
                 textOrigin: input,
                 correction: correctionLevelSelector.value,
-                dev: {
-                    state: devModeCheckbox.checked,
-                },
+                dev: devParams,
             });
     
             appResult.children.length > 0 

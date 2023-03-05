@@ -2,9 +2,10 @@ import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
 
 let DEV_MODE = {
     state: false,
-    finderPatterns: false,
-    boundingRectCorners: false,
     queitRegion: false,
+    boundingRectCorners: false,
+    finderPatterns: false,
+    timingPatterns: false,
 };
 
 /**
@@ -522,7 +523,7 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
         drawAligmentPatterns(context, moduleSize, data.version.number);
         drawVersionCodes(context, moduleSize, data.version.number);
         drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
-        drawTimingPatterns(context, moduleSize);
+        if(DEV_MODE.timingPatterns === true) drawTimingPatterns(context, moduleSize);
 
         if(DEV_MODE.boundingRectCorners){
             let rect = getBoundingRect(context, moduleSize);

@@ -67,8 +67,27 @@
     opacity: 0.25;
 }
 
-#dev__mode-checkbox input[type="checkbox"] {
+#dev input[type="checkbox"] {
     position: relative;
     top: 1px;
     cursor: pointer;
+}
+
+#dev__mode-checkbox, #dev__tools, #dev__info {
+    position: relative;
+    float: left;
+}
+
+#dev__mode-checkbox, #dev__tools{
+    margin-bottom: 5px;
+}
+
+#dev__info, #dev__tools {
+    border-top: 1px solid #5f6064;
+    padding-top: 7px;
+}
+
+#dev__tools label {
+    position: relative;
+    float: left;
 }

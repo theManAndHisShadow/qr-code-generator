@@ -6,6 +6,7 @@ let DEV_MODE = {
     boundingRectCorners: false,
     finderPatterns: false,
     timingPatterns: false,
+    aligmentPatterns: false,
 };
 
 /**
@@ -516,11 +517,12 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
 
     DEV_MODE = data.dev;
 
+    fillBackground(context);
+
     if(DEV_MODE.state === true) {
-        fillBackground(context);
         renderStream(context, moduleSize, data.stream);
         if(DEV_MODE.finderPatterns === true) drawFinderPatterns(context, moduleSize);
-        drawAligmentPatterns(context, moduleSize, data.version.number);
+        if(DEV_MODE.aligmentPatterns === true) drawAligmentPatterns(context, moduleSize, data.version.number);
         drawVersionCodes(context, moduleSize, data.version.number);
         drawCorrectionLevelAndMaskDataCodes(context, moduleSize, data.correction)
         if(DEV_MODE.timingPatterns === true) drawTimingPatterns(context, moduleSize);
@@ -534,7 +536,6 @@ export function drawQR(canvas: HTMLCanvasElement, data: any){
             drawModule(context, rect.rightTop[0], rect.rightTop[1], moduleSize, 'green');
         }
     } else {
-        fillBackground(context);
         renderStream(context, moduleSize, data.stream);
         drawFinderPatterns(context, moduleSize);
         drawAligmentPatterns(context, moduleSize, data.version.number);

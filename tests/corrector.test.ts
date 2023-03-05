@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { prepareData } from "../src/ts/lib/qr";
 import { divideIntoBlocks } from "../src/ts/lib/structurer";
 import { getCorrectionBytesAmount, addCorrectionBytes, calculateCorrectionBytes } from "../src/ts/lib/corrector";

@@ -39,6 +39,25 @@ export function printDevInfo(qrCode: any){
 
 
 /**
+ * Returns default dev params object.
+ * @returns object
+ */
+export function getDefaultDevParams(){
+    let defaultDevParams = {
+        state: false,
+        queitRegion: false,
+        boundingRectCorners: false,
+        finderPatterns: false,
+        timingPatterns: false,
+        aligmentPatterns: false,
+    };
+
+    return defaultDevParams;
+}
+
+
+
+/**
  * Parses all development parameters stored in the data-dev-param attribute 
  * and combines them into a single object.
  * @returns object

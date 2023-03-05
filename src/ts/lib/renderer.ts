@@ -1,13 +1,7 @@
+import { getDefaultDevParams } from '../dev'
 import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
 
-let DEV_MODE = {
-    state: false,
-    queitRegion: false,
-    boundingRectCorners: false,
-    finderPatterns: false,
-    timingPatterns: false,
-    aligmentPatterns: false,
-};
+let DEV_MODE = getDefaultDevParams();
 
 /**
  * Fills background with selected color
@@ -505,7 +499,7 @@ function renderStream(context: CanvasRenderingContext2D, size: number, stream: s
     // });
 
 
-    console.log(columns, freeModules);
+    // console.log(columns, freeModules);
 }
 
 

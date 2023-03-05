@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {getAligmentPatternsPos, getModulesAmount, getVersionData, getCorrectionMaskData} from '../src/ts/lib/renderer';
 
 let version1 = 1;

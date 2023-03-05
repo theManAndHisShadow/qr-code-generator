@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import {prepareData} from '../src/ts/lib/qr';
 import {divideIntoBlocks, getBlocksAmount} from '../src/ts/lib/structurer';
 

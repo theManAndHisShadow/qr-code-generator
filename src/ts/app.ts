@@ -10,9 +10,14 @@ const triggerButton = document.querySelector('#controls__trigger button');
 const appResult = document.querySelector('#app #app__output') as HTMLDivElement;
 
 
+// init var at start
 let devParams = loadDevParams();
 
 triggerButton?.addEventListener('click', () => {
+
+    // update var at every 'generate' click
+    devParams = loadDevParams();
+
     if(input) {
         if(/[а-яёА-ЯЁ]+/gm.test(input.value)) {
             alert('Allowed only letters [a-zA-Z0-9$%*+-./:] and "whitespaces"!');

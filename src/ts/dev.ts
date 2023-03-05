@@ -21,7 +21,7 @@ devModeCheckbox?.addEventListener('click', () => {
 
 /**
  * Print dev info to HTML page.
- * @param qrCode 
+ * @param qrCode data object
  */
 export function printDevInfo(qrCode: any){
     if(devModeCheckbox.checked){

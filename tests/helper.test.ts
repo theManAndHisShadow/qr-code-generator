@@ -1,4 +1,4 @@
-import { verticalFlatten, getAllArrayCombinations, sanitizeInput} from "../src/ts/lib/helper";
+import { verticalFlatten, getAllArrayCombinations, sanitizeInput} from "../src/ts/helper";
 
 let targetString1 = "Hello World!";
 let targetString2 = "ab!@# $%^.:/ /**& ---*()_+!";

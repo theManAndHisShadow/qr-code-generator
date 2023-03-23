@@ -1,6 +1,6 @@
 {
     "files": [
-        "src/ts/lib/qr.ts",
+        "src/ts/qr-core/qr.ts",
         "src/ts/app.ts",
     ],
     "compilerOptions": {

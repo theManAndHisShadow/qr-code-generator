@@ -1,5 +1,5 @@
 import { getDefaultDevParams } from '../dev'
-import { getAllArrayCombinations, nestedArrayIndexOf } from "./helper";
+import { getAllArrayCombinations, nestedArrayIndexOf } from "../helper";
 
 let DEV_MODE = getDefaultDevParams();
 

@@ -1,10 +1,10 @@
-import {decimalToBinary, sanitizeInput} from '../src/ts/lib/helper';
+import {decimalToBinary, sanitizeInput} from '../src/ts/helper';
 
 import {
   convertAllItemsToCodes, 
   groupLettersByTwo, 
   encodeStringToBinaryBytes
-} from '../src/ts/lib/encoder';
+} from '../src/ts/qr-core/encoder';
 
 
 

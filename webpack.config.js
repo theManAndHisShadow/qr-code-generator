@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-      'lib/qr': './src/ts/lib/qr.ts',
+      'lib/qr': './src/ts/qr-core/qr.ts',
       'app': './src/ts/app.ts',
     },
 

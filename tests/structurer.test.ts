@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import {prepareData} from '../src/ts/lib/qr';
-import {divideIntoBlocks, getBlocksAmount} from '../src/ts/lib/structurer';
+import {prepareData} from '../src/ts/qr-core/qr';
+import {divideIntoBlocks, getBlocksAmount} from '../src/ts/qr-core/structurer';
 
 
 let text1 = 'Hello';

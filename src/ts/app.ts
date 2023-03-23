@@ -1,6 +1,6 @@
 import { loadDevParams, printDevInfo } from './dev';
-import { qr } from './lib/qr';
-import { sanitizeInput } from './lib/helper';
+import { qr } from './qr-core/qr';
+import { sanitizeInput } from './helper';
 
 
 

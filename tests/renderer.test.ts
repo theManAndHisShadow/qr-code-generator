@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import {getAligmentPatternsPos, getModulesAmount, getVersionData, getCorrectionMaskData} from '../src/ts/lib/renderer';
+import {getAligmentPatternsPos, getModulesAmount, getVersionData, getCorrectionMaskData} from '../src/ts/qr-core/renderer';
 
 let version1 = 1;
 let version2 = 2;

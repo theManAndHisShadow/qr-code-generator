@@ -1,4 +1,4 @@
-import {decimalToBinary, sanitizeInput} from './helper'
+import {decimalToBinary, sanitizeInput} from '../helper'
 
 /**
  * Returns code of single letter.

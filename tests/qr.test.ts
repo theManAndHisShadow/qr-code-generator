@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import { qr } from "../src/ts/lib/qr";
+import { qr } from "../src/ts/qr-core/qr";
 
 let text1 = 'Hello world!';
 let text2 = 'Other text';

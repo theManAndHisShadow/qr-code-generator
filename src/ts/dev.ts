@@ -1,4 +1,5 @@
 import { json2html } from './libs/json2html-raw/json2html';
+import { qr } from './qr-core/qr';
 
 const devModeCheckbox = document.querySelector('#dev__mode-checkbox input') as HTMLInputElement;
 const devContainer = document.querySelector('#dev') as HTMLInputElement;
@@ -15,14 +16,20 @@ export function printDevInfo(qrCode: any){
     if(devModeCheckbox.checked){
         let devData = {
             correction: qrCode.data.correction,
+            streamLength: qrCode.data.stream.length,
             version: qrCode.data.version,
+
         }
-        let json = JSON.stringify(devData);
-        let rendered = json2html({
+
+        const json = JSON.stringify(devData);
+        const rendered = json2html({
             json: json,
+            theme: 'dracula',
         });
 
-        if(devInfo.children.length == 0) {
+        const isInitialRender = devInfo.children.length == 0;
+
+        if(isInitialRender) {
             devInfo.appendChild(rendered);
         } else {
             devInfo.replaceChild(rendered, devInfo.children[0]);

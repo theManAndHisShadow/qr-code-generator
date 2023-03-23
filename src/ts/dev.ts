@@ -1,3 +1,5 @@
+import { json2html } from './libs/json2html-raw/json2html';
+
 const devModeCheckbox = document.querySelector('#dev__mode-checkbox input') as HTMLInputElement;
 const devContainer = document.querySelector('#dev') as HTMLInputElement;
 const devRenderParamsContainer = document.querySelector('#dev__render-params') as HTMLInputElement;
@@ -15,7 +17,16 @@ export function printDevInfo(qrCode: any){
             correction: qrCode.data.correction,
             version: qrCode.data.version,
         }
-        devInfo.innerHTML = JSON.stringify(devData);
+        let json = JSON.stringify(devData);
+        let rendered = json2html({
+            json: json,
+        });
+
+        if(devInfo.children.length == 0) {
+            devInfo.appendChild(rendered);
+        } else {
+            devInfo.replaceChild(rendered, devInfo.children[0]);
+        }
     } else {
         devInfo.innerHTML = "";
     }
